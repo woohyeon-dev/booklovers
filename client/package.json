@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "1.0.0",
-  "description": "",
+  "description": "Platform for Book Lovers using React and Node",
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --mode development",

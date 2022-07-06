@@ -20,7 +20,7 @@ module.exports = {
   //생성된 번들 파일(bundle)은 ./dist/ 폴더에 생성
   //publicPath를 지정함으로써 HTML등 다른 파일에서 생성된 번들을 참조할 때, /을 기준으로 참조
   output: {
-    path: path.resolve(__dirname, 'dist/'),
+    path: path.resolve(__dirname, 'build/'),
     publicPath: '/',
   },
 
