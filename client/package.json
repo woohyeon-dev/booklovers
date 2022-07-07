@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --mode development",
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf build",
     "build": "webpack --progress --mode production"
   },
   "keywords": [],
@@ -34,6 +34,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "fork-ts-checker-webpack-plugin": "^7.2.11",
     "html-webpack-plugin": "^5.5.0",
+    "interpolate-html-plugin": "^4.0.0",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "ts-loader": "^9.3.1",

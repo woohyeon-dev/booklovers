@@ -6,6 +6,9 @@ const path = require('path');
 //웹팩에서 HTML을 다루기위한 플로그인을 불러오기
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// HTML 파일에서 %ENV% 같은 템플릿 구문 사용 가능
+const InterpolateHtmlPlugin = require('interpolate-html-plugin');
+
 //Typescript(타입스크립트)를 빌드할 때 성능을 향상시키기 위한 플러그인를 불러오기
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
@@ -17,7 +20,7 @@ module.exports = {
     'js/app': ['./src/App.tsx'],
   },
 
-  //생성된 번들 파일(bundle)은 ./dist/ 폴더에 생성
+  //생성된 번들 파일(bundle)은 ./build/ 폴더에 생성
   //publicPath를 지정함으로써 HTML등 다른 파일에서 생성된 번들을 참조할 때, /을 기준으로 참조
   output: {
     path: path.resolve(__dirname, 'build/'),
@@ -57,7 +60,7 @@ module.exports = {
     extensions: ['.js', 'jsx', '.ts', '.tsx'],
   },
 
-  //./src/index.html 파일을 dist 경로에 index.html로 파일을 생성
+  //./src/index.html 파일을 build 경로에 index.html로 파일을 생성
   //파일을 생성할 때, Webpack(웹팩)이 만든 번들 파일(/js/app.js)를 HTML에 추가하여 생성
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -65,6 +68,7 @@ module.exports = {
       template: 'public/index.html',
       filename: 'index.html',
     }),
+    new InterpolateHtmlPlugin({ PUBLIC_URL: '' }),
     // Typescript(타입스크립트)의 컴파일 속도 향상을 위한 플러그인을 설정
     // 타입 체크 과정을 별도의 분리된 프로세스에서 실행되게끔 한다.
     new ForkTsCheckerWebpackPlugin(),
