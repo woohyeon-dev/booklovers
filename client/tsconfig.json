@@ -10,7 +10,12 @@
     "allowJs": true,
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
-    "keyofStringsOnly": true
+    "keyofStringsOnly": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@components": ["components/index"],
+      "@pages": ["pages/index"]
+    }
   },
   "typeRoots": ["node_modules/@types", "src/@type"],
   "exclude": [
