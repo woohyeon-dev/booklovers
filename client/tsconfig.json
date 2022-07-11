@@ -7,6 +7,7 @@
     "noImplicitAny": false,
     "removeComments": false,
     "sourceMap": true,
+    // js 파일 사용 허용여부
     "allowJs": true,
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
@@ -28,5 +29,5 @@
     "src/setupTests.ts",
     "./node_modules/**/*"
   ],
-  "include": ["./src/**/*", "@type"]
+  "include": ["./src/**/*", "@type", "custom.d.ts"]
 }

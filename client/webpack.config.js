@@ -52,6 +52,41 @@ module.exports = {
         ],
         exclude: /node_modules/,
       },
+      {
+        test: /\.css$/i,
+        include: path.resolve(__dirname, 'src'),
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
+      {
+        // 10k 미만의 이미지 파일을 인라인으로 쓰거나 10k 이상의 이미지 파일을 복사한다.
+        test: /\.(jpg|jpeg|gif|png|svg|ico)?$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              fallback: 'file-loader',
+              name: 'images/[name].[hash:8].[ext]',
+            },
+          },
+        ],
+        exclude: /node_modules/,
+      },
+      {
+        // 10k 미만의 파일을 인라인으로 쓰거나 10k 이상의 파일을 복사합니다.
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              fallback: 'file-loader',
+              name: 'fonts/[name].[hash:8].[ext]',
+            },
+          },
+        ],
+        exclude: /node_modules/,
+      },
     ],
   },
 

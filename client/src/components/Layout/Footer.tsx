@@ -5,8 +5,8 @@ const Footer = () => {
   return (
     <FooterBox>
       Footer
-      <a href="https://www.flaticon.com/free-icons/read" title="read icons">
-        Read icons created by Freepik - Flaticon
+      <a href="https://www.flaticon.com/free-icons/book" title="book icons">
+        Book icons created by Smashicons - Flaticon
       </a>
     </FooterBox>
   );
