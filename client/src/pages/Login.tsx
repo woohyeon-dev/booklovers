@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Input, Button, FormContainer } from '@components';
-import { CgMail } from 'react-icons/cg';
+import { FiMail } from 'react-icons/fi';
 import { AiOutlineLock, AiFillFacebook } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
@@ -16,7 +16,8 @@ const Login = () => {
           type="email"
           placeholder="name@domain.com"
           onChange={handleInput}
-          Icon={CgMail}
+          Icon={FiMail}
+          iconWidth={15}
         />
         <Input
           label="Password"

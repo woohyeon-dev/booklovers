@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { IconType } from 'react-icons/lib';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 type props = {
   Icon?: IconType;
+  iconWidth?: number;
   label?: string;
   name: string;
   type: string;
@@ -12,18 +14,35 @@ type props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Input = (props: props) => {
-  const { label, Icon, ...rest } = props;
+const Input = ({ label, Icon, iconWidth = 20, type, ...rest }: props) => {
+  const [inputType, setInputType] = useState(type);
+  const [visible, setVisible] = useState(false);
+  const toggleIcon = (e: React.MouseEvent<SVGElement>) => {
+    setVisible((current) => {
+      if (!current) {
+        setInputType('text');
+      } else {
+        setInputType(type);
+      }
+      return !current;
+    });
+  };
   return (
     <InputBox>
       {label && (
-        <label className="customLabel" htmlFor={props.name}>
+        <label className="customLabel" htmlFor={rest.name}>
           {label}
         </label>
       )}
       <div className="inputGroup">
-        {Icon && <Icon className="icon" />}
-        <input style={Icon && { paddingLeft: '36px' }} className="customInput" {...rest} />
+        {Icon && <Icon className="icon" style={{ width: `${iconWidth}px`, margin: `0 ${(20 - iconWidth) / 2}px` }} />}
+        <input className="customInput" style={Icon && { padding: '0 36px' }} type={inputType} {...rest} />
+        {type === 'password' &&
+          (visible ? (
+            <AiOutlineEye className="visibleIcon" onClick={toggleIcon} />
+          ) : (
+            <AiOutlineEyeInvisible className="visibleIcon" onClick={toggleIcon} />
+          ))}
       </div>
     </InputBox>
   );
@@ -49,11 +68,11 @@ const InputBox = styled.div`
   }
 
   .icon {
-    width: 20px;
     height: 20px;
     position: absolute;
     top: 12px;
     left: 10px;
+    color: #aab1b8;
   }
 
   .customInput {
@@ -63,6 +82,14 @@ const InputBox = styled.div`
     font-size: 13px;
     border: 1px solid #d5d7db;
     border-radius: 0.5rem;
+  }
+
+  .visibleIcon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 12px;
+    right: 10px;
   }
 `;
 
