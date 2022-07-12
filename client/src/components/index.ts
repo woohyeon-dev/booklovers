@@ -7,5 +7,6 @@ import Main from './Main/Main';
 import MyInfo from './MyInfo/MyInfo';
 import Input from './Input';
 import Button from './Button';
+import FormContainer from './FormContainer';
 
-export { BookClub, Catalog, Footer, Forum, Header, Main, MyInfo, Input, Button };
+export { BookClub, Catalog, Footer, Forum, Header, Main, MyInfo, Input, Button, FormContainer };

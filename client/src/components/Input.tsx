@@ -33,13 +33,13 @@ const InputBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-top: 10px;
 
   .customLabel {
     -webkit-user-select: none;
     user-select: none;
     font-size: 15px;
     height: 20px;
-
     padding: 0 6px;
     font-weight: bold;
   }
@@ -52,16 +52,15 @@ const InputBox = styled.div`
     width: 20px;
     height: 20px;
     position: absolute;
-    top: 14px;
+    top: 12px;
     left: 10px;
   }
 
   .customInput {
     width: 100%;
-    height: 46px;
+    height: 44px;
     padding: 0 16px;
     font-size: 13px;
-    margin-bottom: 16px;
     border: 1px solid #d5d7db;
     border-radius: 0.5rem;
   }
