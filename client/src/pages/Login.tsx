@@ -4,7 +4,7 @@ import BackgroundImage from '../assets/book.jpeg';
 import { Input, Button } from '@components';
 import { BiUser } from 'react-icons/bi';
 import { AiOutlineLock } from 'react-icons/ai';
-import Logo from '../../public/Logo.png';
+import Logo from '../assets/favicon.ico';
 import { Link } from 'react-router-dom';
 
 const Login = () => {

@@ -66,7 +66,7 @@ module.exports = {
             options: {
               limit: 10000,
               fallback: 'file-loader',
-              name: 'images/[name].[hash:8].[ext]',
+              name: 'image/[name].[hash:8].[ext]',
             },
           },
         ],
@@ -109,8 +109,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'public/index.html',
       filename: 'index.html',
+      favicon: 'src/assets/favicon.ico',
     }),
-    new InterpolateHtmlPlugin({ PUBLIC_URL: '' }),
+    new InterpolateHtmlPlugin({ PUBLIC_URL: 'src/assets/' }),
     // Typescript(타입스크립트)의 컴파일 속도 향상을 위한 플러그인을 설정
     // 타입 체크 과정을 별도의 분리된 프로세스에서 실행되게끔 한다.
     new ForkTsCheckerWebpackPlugin(),
