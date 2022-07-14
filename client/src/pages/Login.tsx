@@ -4,9 +4,18 @@ import { Input, Button, FormContainer } from '@components';
 import { FiMail } from 'react-icons/fi';
 import { AiOutlineLock, AiFillFacebook } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+import { useInput } from '../hooks';
 
 const Login = () => {
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const {
+    props: {
+      inputValue: { email, password },
+      onChange,
+    },
+  } = useInput({
+    email: '',
+    password: '',
+  });
   return (
     <FormContainer>
       <LoginBox>
@@ -15,17 +24,19 @@ const Login = () => {
           name="email"
           type="email"
           placeholder="name@domain.com"
-          onChange={handleInput}
           Icon={FiMail}
           iconWidth={15}
+          value={email}
+          onChange={onChange}
         />
         <Input
           label="Password"
           name="password"
           type="password"
           placeholder="at least 8 characters"
-          onChange={handleInput}
           Icon={AiOutlineLock}
+          value={password}
+          onChange={onChange}
         />
         <div className="optionGroup">
           <label className="checkLabel">

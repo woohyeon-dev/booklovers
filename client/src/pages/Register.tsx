@@ -1,4 +1,5 @@
 import { Button, FormContainer, Input } from '@components';
+import { useInput } from '../hooks';
 import React from 'react';
 import { AiOutlineLock } from 'react-icons/ai';
 import { BiUser } from 'react-icons/bi';
@@ -7,7 +8,16 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Register = () => {
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const {
+    props: {
+      inputValue: { username, email, password },
+      onChange,
+    },
+  } = useInput({
+    username: '',
+    email: '',
+    password: '',
+  });
   return (
     <FormContainer>
       <RegisterBox>
@@ -16,27 +26,30 @@ const Register = () => {
           name="username"
           type="text"
           placeholder="Enter your full name"
-          onChange={handleInput}
           Icon={BiUser}
           required
+          value={username}
+          onChange={onChange}
         />
         <Input
           label="Email"
           name="email"
           type="email"
           placeholder="Enter your email"
-          onChange={handleInput}
           Icon={FiMail}
           required
+          value={email}
+          onChange={onChange}
         />
         <Input
           label="Password"
           name="password"
           type="password"
           placeholder="Enter your password"
-          onChange={handleInput}
           Icon={AiOutlineLock}
           required
+          value={password}
+          onChange={onChange}
         />
         <div className="warningText">Password must be at least 8 characters</div>
         <Button value="Create account" bgColor="#2c5282" color="white" onClick={(e) => {}} />
