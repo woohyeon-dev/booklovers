@@ -35,12 +35,16 @@ fs.readdirSync(__dirname)
   })
   .forEach(async (file: string) => {
     const { default: model } = await import(path.join(__dirname, file));
-    db[model.name] = model(sequelize);
+    console.log(model);
+    db[model.name] = model;
   });
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
+  }
+  if (db[modelName].init) {
+    db[modelName].init(db);
   }
 });
 

@@ -1,4 +1,9 @@
-import express, { Request, Response } from 'express';
+import express, {
+  ErrorRequestHandler,
+  NextFunction,
+  Request,
+  Response,
+} from 'express';
 import path from 'path';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
@@ -24,6 +29,12 @@ app.use('/auth', authRouter);
 
 app.get('*', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../../client/build/index.html'));
+});
+
+// Error handler middleware
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  console.error(err);
+  res.status(err.status || 500).send('서버에서 에러가 발생했습니다.');
 });
 
 app.listen(app.get('port'), async () => {
