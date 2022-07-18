@@ -4,13 +4,13 @@ import BackgroundImage from '../assets/book.jpeg';
 import favicon from '../assets/favicon.ico';
 import { useLocation } from 'react-router-dom';
 
-function FormContainer({ children }) {
+function FormContainer({ onSubmit, children }) {
   const pathname = useLocation().pathname.replace('/', '');
   return (
     <FormContainerBox>
       <div className="loginContainer">
         <img className="image" src={BackgroundImage} alt="" />
-        <form className="loginFormBox">
+        <form className="loginFormBox" onSubmit={onSubmit}>
           <div className="logo">
             <img className="logoIcon" src={favicon} alt="" />
             <span>BookLovers</span>

@@ -4,20 +4,22 @@ import { Input, Button, FormContainer } from '@components';
 import { FiMail } from 'react-icons/fi';
 import { AiOutlineLock, AiFillFacebook } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { useInput } from '../hooks';
+import { useInput } from '@hooks';
 
 const Login = () => {
   const {
-    props: {
-      inputValue: { email, password },
-      onChange,
-    },
+    props: { inputValue, onChange },
   } = useInput({
     email: '',
     password: '',
   });
+  const { email, password } = inputValue;
+  const handleInput = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(inputValue);
+  };
   return (
-    <FormContainer>
+    <FormContainer onSubmit={handleInput}>
       <LoginBox>
         <Input
           label="Email"
@@ -28,6 +30,8 @@ const Login = () => {
           iconWidth={15}
           value={email}
           onChange={onChange}
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+          title="Email Address format is not valid."
         />
         <Input
           label="Password"

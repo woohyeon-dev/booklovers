@@ -1,25 +1,38 @@
 import { Button, FormContainer, Input } from '@components';
-import { useInput } from '../hooks';
+import { useAxios, useInput } from '@hooks';
 import React from 'react';
 import { AiOutlineLock } from 'react-icons/ai';
 import { BiUser } from 'react-icons/bi';
 import { FiMail } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Register = () => {
+  const navigate = useNavigate();
   const {
-    props: {
-      inputValue: { username, email, password },
-      onChange,
-    },
+    props: { inputValue, onChange },
   } = useInput({
     username: '',
     email: '',
     password: '',
   });
+  const { username, email, password } = inputValue;
+  const { sendData } = useAxios({
+    method: 'POST',
+    url: `/auth`,
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+    data: inputValue,
+  });
+
+  const handleInput = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    sendData();
+    navigate('/');
+  };
   return (
-    <FormContainer>
+    <FormContainer onSubmit={handleInput}>
       <RegisterBox>
         <Input
           label="Username"
@@ -40,6 +53,8 @@ const Register = () => {
           required
           value={email}
           onChange={onChange}
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+          title="Email Address format is not valid."
         />
         <Input
           label="Password"
@@ -50,8 +65,12 @@ const Register = () => {
           required
           value={password}
           onChange={onChange}
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
         />
-        <div className="warningText">Password must be at least 8 characters</div>
+        <div className="warningText">
+          Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters
+        </div>
         <Button value="Create account" bgColor="#2c5282" color="white" onClick={(e) => {}} />
         <div className="registerGroup">
           <span>Aleady have an account?</span>
@@ -66,7 +85,6 @@ const Register = () => {
 
 const RegisterBox = styled.div`
   .warningText {
-    height: 36px;
     font-size: 13px;
     padding-top: 6px;
     padding-left: 6px;
@@ -78,7 +96,7 @@ const RegisterBox = styled.div`
     padding-top: 16px;
     font-size: 13px;
     height: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     text-align: center;
   }
 

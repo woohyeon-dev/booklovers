@@ -12,6 +12,8 @@ type props = {
   placeholder: string;
   required?: boolean;
   value: string | number;
+  pattern?: string;
+  title?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
