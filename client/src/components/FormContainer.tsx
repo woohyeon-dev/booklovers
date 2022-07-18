@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import BackgroundImage from '../assets/book.jpeg';
 import favicon from '../assets/favicon.ico';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function FormContainer({ onSubmit, children }) {
   const pathname = useLocation().pathname.replace('/', '');
@@ -11,10 +11,10 @@ function FormContainer({ onSubmit, children }) {
       <div className="loginContainer">
         <img className="image" src={BackgroundImage} alt="" />
         <form className="loginFormBox" onSubmit={onSubmit}>
-          <div className="logo">
+          <Link to="/" className="logo">
             <img className="logoIcon" src={favicon} alt="" />
             <span>BookLovers</span>
-          </div>
+          </Link>
           {pathname.startsWith('login') && (
             <>
               <div className="title">Log in.</div>
@@ -43,7 +43,7 @@ const FormContainerBox = styled.div`
 
   .loginContainer {
     width: 820px;
-    height: 540px;
+    height: 560px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -53,12 +53,12 @@ const FormContainerBox = styled.div`
 
   .image {
     width: 460px;
-    height: 540px;
+    height: 560px;
   }
 
   .loginFormBox {
     width: 360px;
-    height: 540px;
+    height: 560px;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -68,7 +68,6 @@ const FormContainerBox = styled.div`
     display: flex;
     font-family: 'Unreal_science_orbit';
     font-weight: bold;
-    height: 100%;
   }
 
   .logo > img {
@@ -79,6 +78,9 @@ const FormContainerBox = styled.div`
   .title {
     font-size: 36px;
     font-weight: bold;
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
   }
 
   .subTitle {

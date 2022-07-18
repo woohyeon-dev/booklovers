@@ -15,21 +15,26 @@ const Register = () => {
     username: '',
     email: '',
     password: '',
+    re_password: '',
   });
-  const { username, email, password } = inputValue;
+  const { username, email, password, re_password } = inputValue;
   const { sendData } = useAxios({
     method: 'POST',
     url: `/auth`,
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
-    data: inputValue,
+    data: { username, email, password },
   });
 
   const handleInput = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    sendData();
-    navigate('/');
+    if (password === re_password) {
+      sendData();
+      navigate('/');
+    } else {
+      alert('Passwords must match');
+    }
   };
   return (
     <FormContainer onSubmit={handleInput}>
@@ -68,9 +73,18 @@ const Register = () => {
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
         />
-        <div className="warningText">
-          Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters
-        </div>
+        <Input
+          label="Re-enter password"
+          name="re_password"
+          type="password"
+          placeholder="Enter your password"
+          Icon={AiOutlineLock}
+          required
+          value={re_password}
+          onChange={onChange}
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
+        />
         <Button value="Create account" bgColor="#2c5282" color="white" onClick={(e) => {}} />
         <div className="registerGroup">
           <span>Aleady have an account?</span>
@@ -84,19 +98,16 @@ const Register = () => {
 };
 
 const RegisterBox = styled.div`
-  .warningText {
-    font-size: 13px;
-    padding-top: 6px;
-    padding-left: 6px;
-    padding-bottom: 16px;
-    word-spacing: 2px;
+  width: 320px;
+
+  Button {
+    margin-top: 30px;
   }
 
   .registerGroup {
     padding-top: 16px;
     font-size: 13px;
     height: 30px;
-    margin-bottom: 20px;
     text-align: center;
   }
 

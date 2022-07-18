@@ -59,13 +59,21 @@ const Login = () => {
           </Link>
         </div>
         <div className="divider text-gray-500">or</div>
-        <Button value="Sign in with Facebook" Icon={AiFillFacebook} iconColor={'#3b5998'} onClick={(e) => {}} />
+        <Button
+          value="Sign in with Facebook"
+          Icon={AiFillFacebook}
+          iconColor={'#3b5998'}
+          type="button"
+          onClick={(e) => {}}
+        />
       </LoginBox>
     </FormContainer>
   );
 };
 
 const LoginBox = styled.div`
+  width: 320px;
+
   .optionGroup {
     display: flex;
     justify-content: space-between;
