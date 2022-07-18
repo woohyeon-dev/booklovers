@@ -1,1 +1,4 @@
-export { useInput } from './useInput';
+import useInput from './useInput';
+import useAxios from './useAxios';
+
+export { useInput, useAxios };

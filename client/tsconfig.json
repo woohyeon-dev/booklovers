@@ -15,7 +15,8 @@
     "baseUrl": "./src",
     "paths": {
       "@components": ["components/index"],
-      "@pages": ["pages/index"]
+      "@pages": ["pages/index"],
+      "@hooks": ["hooks/index"]
     }
   },
   "typeRoots": ["node_modules/@types", "src/@type"],

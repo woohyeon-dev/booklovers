@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const useInput = (initialValue: any, validator?: (arg: string) => boolean) => {
+const useInput = (initialValue: any, validator?: (arg: string) => boolean) => {
   const [inputValue, setInputValue] = useState(initialValue);
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -17,3 +17,5 @@ export const useInput = (initialValue: any, validator?: (arg: string) => boolean
   };
   return { props: { inputValue, onChange }, utils: { setInputValue } };
 };
+
+export default useInput;
