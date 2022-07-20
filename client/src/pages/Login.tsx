@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { Input, Button, FormContainer } from '@components';
 import { FiMail } from 'react-icons/fi';
 import { AiOutlineLock, AiFillFacebook } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
-import { useInput } from '@hooks';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAxios, useInput } from '@hooks';
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     props: { inputValue, onChange },
   } = useInput({
@@ -14,12 +15,26 @@ const Login = () => {
     password: '',
   });
   const { email, password } = inputValue;
-  const handleInput = (e: React.FormEvent<HTMLFormElement>) => {
+  const { sendData } = useAxios({
+    method: 'POST',
+    url: `/auth/login`,
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+    data: inputValue,
+  });
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(inputValue);
+    try {
+      await sendData();
+      navigate('/');
+    } catch (err) {
+      console.error(err);
+      alert(err.response.data.msg);
+    }
   };
   return (
-    <FormContainer onSubmit={handleInput}>
+    <FormContainer onSubmit={handleSubmit}>
       <LoginBox>
         <Input
           label="Email"

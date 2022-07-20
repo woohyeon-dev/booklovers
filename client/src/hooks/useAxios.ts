@@ -17,18 +17,24 @@ const useAxios = (axiosParams: AxiosRequestConfig) => {
   const fetchData = async (params: AxiosRequestConfig) => {
     try {
       const result = await axios.request(params);
-      console.log(result.data);
       setResponse(result.data);
+      if (result.data.msg) {
+        console.log(result.data.msg);
+      }
     } catch (err) {
-      console.error(err);
       setError(err);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  const sendData = () => {
-    fetchData(axiosParams);
+  const sendData = async () => {
+    try {
+      await fetchData(axiosParams);
+    } catch (err) {
+      throw err;
+    }
   };
 
   return { response, error, loading, sendData };

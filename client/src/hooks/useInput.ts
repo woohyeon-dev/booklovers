@@ -13,7 +13,6 @@ const useInput = (initialValue: any, validator?: (arg: string) => boolean) => {
     if (willUpdate) {
       setInputValue({ ...inputValue, [name]: value });
     }
-    console.log(value);
   };
   return { props: { inputValue, onChange }, utils: { setInputValue } };
 };

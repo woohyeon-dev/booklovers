@@ -1,5 +1,6 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, Sequelize, CreationOptional } from 'sequelize';
 import db from './index';
+
 interface UserAttributes {
   username: string;
   email: string;
@@ -7,6 +8,7 @@ interface UserAttributes {
   nickname?: string;
   age?: string;
   sex?: string;
+  refresh_token?: string;
 }
 
 class User extends Model<UserAttributes> {
@@ -16,6 +18,13 @@ class User extends Model<UserAttributes> {
   public nickname?: string;
   public age?: string;
   public sex?: string;
+  public refresh_token?: string;
+
+  // timestamps!
+  // createdAt can be undefined during creation
+  declare readonly createdAt: CreationOptional<Date>;
+  // updatedAt can be undefined during creation
+  declare readonly deletedAt: CreationOptional<Date>;
 }
 
 User.init(
@@ -39,7 +48,6 @@ User.init(
     },
     nickname: {
       type: DataTypes.STRING(50),
-      defaultValue: 'Unnamed',
       allowNull: false,
     },
     age: {
@@ -50,9 +58,13 @@ User.init(
       type: DataTypes.BOOLEAN,
       allowNull: true,
     },
+    refresh_token: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
   },
   {
-    sequelize: db.sequelize,
+    sequelize: db.sequelize, // passing the `sequelize` instance is required
     modelName: 'users',
     tableName: 'Users',
     timestamps: true, // createAt & updateAt 활성화

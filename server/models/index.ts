@@ -7,7 +7,7 @@ import Sequelize from 'sequelize';
 // 환경변수, 실제 배포할 때는 'production'으로 바꿔야한다
 const env = process.env.NODE_ENV || 'development';
 // config
-import { config } from '../../config/config';
+import { config } from '../config/config';
 
 const currentConfig = config[env];
 
@@ -40,11 +40,11 @@ fs.readdirSync(__dirname)
   });
 
 Object.keys(db).forEach(modelName => {
+  if (db[modelName].init) {
+    db[modelName].init(sequelize);
+  }
   if (db[modelName].associate) {
     db[modelName].associate(db);
-  }
-  if (db[modelName].init) {
-    db[modelName].init(db);
   }
 });
 

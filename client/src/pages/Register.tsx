@@ -20,24 +20,30 @@ const Register = () => {
   const { username, email, password, re_password } = inputValue;
   const { sendData } = useAxios({
     method: 'POST',
-    url: `/auth`,
+    url: `/auth/register`,
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
     data: { username, email, password },
   });
 
-  const handleInput = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (password === re_password) {
-      sendData();
-      navigate('/');
-    } else {
-      alert('Passwords must match');
+    try {
+      if (password === re_password) {
+        await sendData();
+        navigate('/');
+      } else {
+        alert('Passwords must match');
+      }
+    } catch (err) {
+      console.error(err);
+      alert(err.response.data.msg);
     }
   };
+
   return (
-    <FormContainer onSubmit={handleInput}>
+    <FormContainer onSubmit={handleSubmit}>
       <RegisterBox>
         <Input
           label="Username"
