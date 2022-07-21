@@ -1,23 +1,28 @@
-import { useState, useEffect } from 'react';
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { useState, useEffect, useCallback } from 'react';
+import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 
 axios.defaults.baseURL = '';
+axios.defaults.headers['Content-type'] = 'application/json; charset=UTF-8';
 
-const useAxios = (axiosParams: AxiosRequestConfig) => {
+const useAxios = (url: string, method: Method | string, data?: any) => {
   const [response, setResponse] = useState<AxiosResponse>();
   const [error, setError] = useState<AxiosError>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (axiosParams.method === 'GET' || axiosParams.method === 'get') {
-      fetchData(axiosParams);
+    try {
+      if (method === 'get' || method === 'GET') {
+        fetchData(url, method, data);
+      }
+    } catch (err) {
+      console.error(err);
     }
   }, []);
 
-  const fetchData = async (params: AxiosRequestConfig) => {
+  const fetchData = async (url: string, method: Method | string, data?: any) => {
     try {
-      const result = await axios.request(params);
-      setResponse(result.data);
+      const result = await axios.request({ url, method, data: data ? data : '' });
+      setResponse(result);
       if (result.data.msg) {
         console.log(result.data.msg);
       }
@@ -31,9 +36,10 @@ const useAxios = (axiosParams: AxiosRequestConfig) => {
 
   const sendData = async () => {
     try {
-      await fetchData(axiosParams);
+      await fetchData(url, method, data);
     } catch (err) {
-      throw err;
+      console.error(error);
+      alert(err.response.data.msg);
     }
   };
 

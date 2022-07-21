@@ -15,14 +15,7 @@ const Login = () => {
     password: '',
   });
   const { email, password } = inputValue;
-  const { sendData } = useAxios({
-    method: 'POST',
-    url: `/auth/login`,
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
-    data: inputValue,
-  });
+  const { sendData } = useAxios('/auth/login', 'POST', inputValue);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {

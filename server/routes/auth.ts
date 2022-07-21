@@ -67,13 +67,13 @@ router.post('/login', async (req, res, next) => {
 
     // Access Token 생성
     const accessToken = jwt.sign(
-      { user: { username: user.nickname, email, password } },
+      { user: { nickname: user.nickname } },
       ACCESS_TOKEN_SECRET,
       { expiresIn: '15s' }
     );
     // Refresh Token 생성
     const refreshToken = jwt.sign(
-      { user: { username: user.nickname, email, password } },
+      { user: { nickname: user.nickname } },
       REFRESH_TOKEN_SECRET,
       { expiresIn: '1d' }
     );
@@ -98,14 +98,19 @@ router.get('/token', async (req, res, next) => {
   const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || '';
   try {
     const refreshToken = req.cookies.refreshToken;
-    if (!refreshToken) return res.sendStatus(401);
+    if (!refreshToken)
+      return res
+        .status(401)
+        .json({ msg: 'Refresh token does not exist', code: 1 });
     const user = await User.findAll({
       where: {
         refresh_token: refreshToken,
       },
     });
-    if (!user[0]) return res.sendStatus(403);
-    console.log(user);
+    if (!user[0]) {
+      res.clearCookie('refreshToken');
+      return res.status(403).json({ msg: 'Invalid refresh token', code: 1 });
+    }
     jwt.verify(
       refreshToken,
       REFRESH_TOKEN_SECRET,
@@ -117,7 +122,7 @@ router.get('/token', async (req, res, next) => {
         const nickname = user[0].nickname;
         // Access Token 생성
         const accessToken = jwt.sign(
-          { user: { username: nickname } },
+          { user: { nickname: nickname } },
           ACCESS_TOKEN_SECRET,
           {
             expiresIn: '15s',

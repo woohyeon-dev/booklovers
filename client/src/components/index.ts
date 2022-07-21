@@ -1,12 +1,12 @@
 import BookClub from './BookClub/BookClub';
-import Catalog from './Catalog/Catalog';
+import Books from './Books/Books';
 import Footer from './Layout/Footer';
-import Forum from './Forum/Forum';
+import Community from './Community/Community';
 import Header from './Layout/Header';
 import Main from './Main/Main';
-import MyInfo from './MyInfo/MyInfo';
+import Profile from './Profile/Profile';
 import Input from './Input';
 import Button from './Button';
 import FormContainer from './FormContainer';
 
-export { BookClub, Catalog, Footer, Forum, Header, Main, MyInfo, Input, Button, FormContainer };
+export { BookClub, Books, Footer, Community, Header, Main, Profile, Input, Button, FormContainer };

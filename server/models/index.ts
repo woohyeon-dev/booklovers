@@ -35,7 +35,6 @@ fs.readdirSync(__dirname)
   })
   .forEach(async (file: string) => {
     const { default: model } = await import(path.join(__dirname, file));
-    console.log(model);
     db[model.name] = model;
   });
 

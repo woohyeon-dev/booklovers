@@ -18,27 +18,15 @@ const Register = () => {
     re_password: '',
   });
   const { username, email, password, re_password } = inputValue;
-  const { sendData } = useAxios({
-    method: 'POST',
-    url: `/auth/register`,
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
-    data: { username, email, password },
-  });
+  const { sendData } = useAxios('/auth/register', 'POST', { username, email, password });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      if (password === re_password) {
-        await sendData();
-        navigate('/');
-      } else {
-        alert('Passwords must match');
-      }
-    } catch (err) {
-      console.error(err);
-      alert(err.response.data.msg);
+    if (password === re_password) {
+      await sendData();
+      navigate('/');
+    } else {
+      alert('Passwords must match');
     }
   };
 
