@@ -14,8 +14,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot" element={<Forgot />} />
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<Error />} />
+        <Route path="/*" element={<Home />} />
+        <Route path="/error" element={<Error />} />
       </Routes>
     </BrowserRouter>
   );
@@ -37,6 +37,8 @@ const GlobalStyle = createGlobalStyle`
   }
   * {
     box-sizing: border-box;
+    -webkit-user-select: none;
+    user-select: none;
   }
   body{
     background-color: #ffffff;

@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const MyInfo = () => {
-  return <MyInfoBox>MyInfo</MyInfoBox>;
+const Profile = () => {
+  return <ProfileBox>Profile</ProfileBox>;
 };
 
-const MyInfoBox = styled.div``;
+const ProfileBox = styled.div``;
 
-export default MyInfo;
+export default Profile;

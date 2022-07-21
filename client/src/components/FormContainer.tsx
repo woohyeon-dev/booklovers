@@ -38,8 +38,8 @@ const FormContainerBox = styled.div`
   height: 100vh;
   display: flex;
   align-items: center;
-  -webkit-user-select: none;
-  user-select: none;
+  /* -webkit-user-select: none;
+  user-select: none; */
 
   .loginContainer {
     width: 820px;

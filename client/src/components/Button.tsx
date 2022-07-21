@@ -31,8 +31,8 @@ const StyledButton = styled.button<{ color?: string; bgColor?: string }>`
   line-height: 44px;
   justify-content: center;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 7px -1px;
-  -webkit-user-select: none;
-  user-select: none;
+  /* -webkit-user-select: none;
+  user-select: none; */
   border: 1px solid black;
   color: ${(props) => props.color || 'black'};
   background-color: ${(props) => props.bgColor || 'white'};

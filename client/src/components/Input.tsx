@@ -58,8 +58,8 @@ const InputBox = styled.div`
   padding-top: 10px;
 
   .customLabel {
-    -webkit-user-select: none;
-    user-select: none;
+    /* -webkit-user-select: none;
+    user-select: none; */
     font-size: 15px;
     height: 20px;
     padding: 0 6px;

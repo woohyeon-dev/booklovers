@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { ProfileMenu } from '@components';
 import { refreshToken } from '../../utils/refreshToken';
 import profile from '../../assets/profile.jpeg';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
@@ -9,8 +10,10 @@ import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 let currentPath = '';
 
 const Header = () => {
-  const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
+  const [visibleMenu, setVisibleMenu] = useState(false);
+
+  const navigate = useNavigate();
   let location = useLocation();
   // 새로고침
   useEffect(() => {
@@ -49,6 +52,8 @@ const Header = () => {
     }
   };
 
+  const handleProfileMenu = (e: React.MouseEvent<HTMLDivElement>) => {};
+
   return (
     <HeaderBox>
       <div className="headerContainer">
@@ -65,7 +70,7 @@ const Header = () => {
           <Link className="nav" to="/community">
             Community
           </Link>
-          {nickname && (
+          {!nickname && (
             <>
               <Link className="nav" to="/login">
                 Login
@@ -75,12 +80,18 @@ const Header = () => {
               </Link>
             </>
           )}
-          {!nickname && (
+          {nickname && (
             <>
-              <Link className="nav profile" to="/profile">
+              <div
+                className="nav profile"
+                onClick={() => {
+                  setVisibleMenu((current) => !current);
+                }}
+              >
                 <img src={profile} alt="" />
                 <MdOutlineKeyboardArrowDown />
-              </Link>
+                {visibleMenu && <ProfileMenu />}
+              </div>
             </>
           )}
         </div>
@@ -91,14 +102,17 @@ const Header = () => {
 
 const HeaderBox = styled.div`
   height: 120px;
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  background-color: white;
   border-bottom: 2px solid #f7f8f9;
-  -webkit-user-select: none;
-  user-select: none;
 
   .headerContainer {
     width: 1080px;
     height: 120px;
     margin: 0 auto;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -108,7 +122,7 @@ const HeaderBox = styled.div`
     display: flex;
     align-items: center;
     font-family: 'Unreal_science_orbit';
-    font-size: 50px;
+    font-size: 55px;
     padding: 4px;
   }
 
@@ -121,10 +135,17 @@ const HeaderBox = styled.div`
     margin: 0 20px;
     padding: 4px;
     font-size: 18px;
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
-  .nav:last-child {
-    margin-right: 0;
+  .profile {
+    font-size: 16px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .profile > img {
