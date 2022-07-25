@@ -2,9 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { RiEdit2Line, RiLogoutCircleRLine } from 'react-icons/ri';
+import axios from 'axios';
 
-const ProfileMenu = () => {
-  const handleLogout = (e: React.MouseEvent<HTMLDivElement>) => {};
+const ProfileMenu = ({ setIsLoggedIn }) => {
+  const handleLogout = async (e: React.MouseEvent<HTMLDivElement>) => {
+    try {
+      const res = await axios.post('/auth/logout');
+      console.log(res.data.msg);
+      setIsLoggedIn(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <ProfileMenuBox>
       <Link to="/profile" className="list">

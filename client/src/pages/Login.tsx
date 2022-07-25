@@ -4,7 +4,8 @@ import { Input, Button, FormContainer } from '@components';
 import { FiMail } from 'react-icons/fi';
 import { AiOutlineLock, AiFillFacebook } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAxios, useInput } from '@hooks';
+import { useInput } from '@hooks';
+import axios from 'axios';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,14 +16,13 @@ const Login = () => {
     password: '',
   });
   const { email, password } = inputValue;
-  const { sendData } = useAxios('/auth/login', 'POST', inputValue);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await sendData();
+      const res = await axios.post('/auth/login', inputValue);
+      axios.defaults.headers.common['Authorization'] = res.data.accessToken ? `Bearer ${res.data.accessToken}` : null;
       navigate('/');
     } catch (err) {
-      console.error(err);
       alert(err.response.data.msg);
     }
   };

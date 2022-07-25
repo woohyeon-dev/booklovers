@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 export const refreshToken = async () => {
   try {
@@ -7,7 +6,11 @@ export const refreshToken = async () => {
     axios.defaults.headers.common['Authorization'] = token.data.accessToken ? `Bearer ${token.data.accessToken}` : null;
   } catch (err) {
     if (err.response.data.code == 1) {
+      // Cookie does not have refresh token
+      // Invalid refresh token
+      axios.defaults.headers.common['Authorization'] = null;
       return 'guest';
     }
+    console.error(err);
   }
 };

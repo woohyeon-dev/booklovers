@@ -11,7 +11,7 @@ interface UserAttributes {
   refresh_token?: string;
 }
 
-class User extends Model<UserAttributes> {
+class Users extends Model<UserAttributes> {
   public username!: string;
   public email!: string;
   public password!: string;
@@ -27,7 +27,7 @@ class User extends Model<UserAttributes> {
   declare readonly deletedAt: CreationOptional<Date>;
 }
 
-User.init(
+Users.init(
   {
     username: {
       type: DataTypes.STRING(50),
@@ -74,4 +74,4 @@ User.init(
   }
 );
 
-export default User;
+export default Users;

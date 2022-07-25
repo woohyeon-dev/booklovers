@@ -1,5 +1,6 @@
 import { Button, FormContainer, Input } from '@components';
-import { useAxios, useInput } from '@hooks';
+import { useInput } from '@hooks';
+import axios from 'axios';
 import React from 'react';
 import { AiOutlineLock } from 'react-icons/ai';
 import { BiUser } from 'react-icons/bi';
@@ -18,12 +19,12 @@ const Register = () => {
     re_password: '',
   });
   const { username, email, password, re_password } = inputValue;
-  const { sendData } = useAxios('/auth/register', 'POST', { username, email, password });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password === re_password) {
-      await sendData();
+      const res = await axios.post('/auth/register', { username, email, password });
+      console.log(res.data.msg);
       navigate('/');
     } else {
       alert('Passwords must match');

@@ -10,7 +10,7 @@ import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 let currentPath = '';
 
 const Header = () => {
-  const [nickname, setNickname] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [visibleMenu, setVisibleMenu] = useState(false);
 
   const navigate = useNavigate();
@@ -28,9 +28,9 @@ const Header = () => {
   const getUser = async () => {
     try {
       const user = await axios.get('/auth/user');
-      setNickname(user.data.nickname);
+      setIsLoggedIn((current) => !current);
     } catch (err) {
-      if (err.response.data.code == 2) {
+      if (err.response.data.code === 2) {
         // Access token does not exist
         // Aceess token 재발급해야 함
         const result = await refreshToken();
@@ -38,21 +38,16 @@ const Header = () => {
         if (result !== 'guest') {
           try {
             const user = await axios.get('/auth/user');
-            setNickname(user.data.nickname);
+            setIsLoggedIn((current) => !current);
           } catch (err) {
             console.error(err);
           }
-        } else {
-          alert('로그인 후 이용가능합니다');
-          navigate('/login');
         }
       } else {
         console.error(err);
       }
     }
   };
-
-  const handleProfileMenu = (e: React.MouseEvent<HTMLDivElement>) => {};
 
   return (
     <HeaderBox>
@@ -70,7 +65,7 @@ const Header = () => {
           <Link className="nav" to="/community">
             Community
           </Link>
-          {!nickname && (
+          {!isLoggedIn && (
             <>
               <Link className="nav" to="/login">
                 Login
@@ -80,7 +75,7 @@ const Header = () => {
               </Link>
             </>
           )}
-          {nickname && (
+          {isLoggedIn && (
             <>
               <div
                 className="nav profile"
@@ -90,7 +85,7 @@ const Header = () => {
               >
                 <img src={profile} alt="" />
                 <MdOutlineKeyboardArrowDown />
-                {visibleMenu && <ProfileMenu />}
+                {visibleMenu && <ProfileMenu setIsLoggedIn={setIsLoggedIn} />}
               </div>
             </>
           )}

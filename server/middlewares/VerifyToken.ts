@@ -10,10 +10,11 @@ export const verifyToken = (
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
   jwt.verify(token || '', ACCESS_TOKEN_SECRET, (err, decoded) => {
-    if (err)
+    if (err) {
       return res
         .status(403)
         .json({ msg: 'Access token does not exist', code: 2 });
+    }
     // @ts-ignore
     req.user = decoded?.user;
     next();

@@ -1,5 +1,5 @@
 import express from 'express';
-import User from '../models/User';
+import Users from '../models/Users';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { verifyToken } from '../middlewares/VerifyToken';
@@ -9,7 +9,7 @@ const router = express.Router();
 router.post('/register', async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
-    const exEmail = await User.findOne({
+    const exEmail = await Users.findOne({
       // 이메일 중복 검사
       attributes: ['email'],
       where: {
@@ -25,23 +25,26 @@ router.post('/register', async (req, res, next) => {
     // bcrypt - 비밀번호 해쉬화하기
     const hash = await bcrypt.hash(password, 12);
 
-    await User.create({
+    await Users.create({
       username,
       email,
       password: hash,
       nickname: email,
     });
 
-    return res.json({ msg: 'User registered successfully!' });
+    return res.json({ msg: 'Users registered successfully!' });
   } catch (err) {
     next(err);
   }
 });
 
 router.post('/login', async (req, res, next) => {
+  const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || '';
+  const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || '';
+
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({
+    const user = await Users.findOne({
       attributes: ['nickname', 'password'],
       where: { email },
     });
@@ -62,23 +65,18 @@ router.post('/login', async (req, res, next) => {
         .json({ msg: 'Login Failed! You entered an invalid password.' });
     }
 
-    const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || '';
-    const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || '';
-
     // Access Token 생성
     const accessToken = jwt.sign(
       { user: { nickname: user.nickname } },
       ACCESS_TOKEN_SECRET,
-      { expiresIn: '15s' }
+      { expiresIn: '1h' }
     );
     // Refresh Token 생성
-    const refreshToken = jwt.sign(
-      { user: { nickname: user.nickname } },
-      REFRESH_TOKEN_SECRET,
-      { expiresIn: '1d' }
-    );
+    const refreshToken = jwt.sign({}, REFRESH_TOKEN_SECRET, {
+      expiresIn: '14d',
+    });
     // Refresh Token db에 저장
-    await User.update(
+    await Users.update(
       { refresh_token: refreshToken },
       { where: { email: email } }
     );
@@ -96,13 +94,15 @@ router.post('/login', async (req, res, next) => {
 router.get('/token', async (req, res, next) => {
   const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || '';
   const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || '';
+
   try {
     const refreshToken = req.cookies.refreshToken;
-    if (!refreshToken)
+    if (!refreshToken) {
       return res
         .status(401)
         .json({ msg: 'Refresh token does not exist', code: 1 });
-    const user = await User.findAll({
+    }
+    const user = await Users.findAll({
       where: {
         refresh_token: refreshToken,
       },
@@ -116,16 +116,19 @@ router.get('/token', async (req, res, next) => {
       REFRESH_TOKEN_SECRET,
       (
         err: jwt.VerifyErrors | null,
-        decode: string | jwt.JwtPayload | undefined
+        decoded: string | jwt.JwtPayload | undefined
       ) => {
-        if (err) return res.sendStatus(403);
+        if (err) {
+          return res.sendStatus(403);
+        }
+        console.log(decoded);
         const nickname = user[0].nickname;
         // Access Token 생성
         const accessToken = jwt.sign(
           { user: { nickname: nickname } },
           ACCESS_TOKEN_SECRET,
           {
-            expiresIn: '15s',
+            expiresIn: '1d',
           }
         );
         return res.json({ accessToken, msg: 'Token Refresh Successfully!' });
@@ -139,6 +142,33 @@ router.get('/token', async (req, res, next) => {
 router.get('/user', verifyToken, async (req, res, next) => {
   // @ts-ignore
   return res.json(req.user);
+});
+
+router.post('/logout', async (req, res, next) => {
+  const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) {
+    return res.status(204).json({ msg: 'Cookie does not have refresh token' });
+  }
+  const user = await Users.findOne({
+    where: {
+      refresh_token: refreshToken,
+    },
+  });
+  if (!user) {
+    res.clearCookie('refreshToken');
+    res.status(204).json({ msg: 'Invalid refresh token' });
+  }
+  const nickname = user!.nickname;
+  await Users.update(
+    { refresh_token: undefined },
+    {
+      where: {
+        nickname,
+      },
+    }
+  );
+  res.clearCookie('refreshToken');
+  res.json({ msg: 'Logout successfully!' });
 });
 
 export default router;
