@@ -6,7 +6,7 @@ interface UserAttributes {
   email: string;
   password: string;
   nickname?: string;
-  age?: string;
+  birthday?: Date;
   sex?: string;
   refresh_token?: string;
 }
@@ -16,7 +16,7 @@ class Users extends Model<UserAttributes> {
   public email!: string;
   public password!: string;
   public nickname?: string;
-  public age?: string;
+  public birthday?: Date;
   public sex?: string;
   public refresh_token?: string;
 
@@ -50,8 +50,8 @@ Users.init(
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    age: {
-      type: DataTypes.INTEGER,
+    birthday: {
+      type: DataTypes.DATEONLY, // DATE without time.
       allowNull: true,
     },
     sex: {

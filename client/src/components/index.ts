@@ -9,5 +9,19 @@ import Input from './Input';
 import Button from './Button';
 import FormContainer from './FormContainer';
 import ProfileMenu from './Layout/ProfileMenu';
+import ProfileForm from './Profile/ProfileForm';
 
-export { BookClub, Books, Footer, Community, Header, Main, Profile, Input, Button, FormContainer, ProfileMenu };
+export {
+  BookClub,
+  Books,
+  Footer,
+  Community,
+  Header,
+  Main,
+  Profile,
+  ProfileForm,
+  Input,
+  Button,
+  FormContainer,
+  ProfileMenu,
+};

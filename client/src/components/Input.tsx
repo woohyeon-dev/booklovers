@@ -9,11 +9,12 @@ type props = {
   label?: string;
   name: string;
   type: string;
-  placeholder: string;
+  placeholder?: string;
   required?: boolean;
   value: string | number;
   pattern?: string;
   title?: string;
+  disabled?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -58,8 +59,6 @@ const InputBox = styled.div`
   padding-top: 10px;
 
   .customLabel {
-    /* -webkit-user-select: none;
-    user-select: none; */
     font-size: 15px;
     height: 20px;
     padding: 0 6px;
@@ -82,9 +81,18 @@ const InputBox = styled.div`
     width: 100%;
     height: 44px;
     padding: 0 16px;
-    font-size: 13px;
+    font-size: 14px;
     border: 1px solid #d5d7db;
     border-radius: 0.5rem;
+
+    &:disabled {
+      border: 1px solid #d5d7db;
+      background-color: #f7f8f9;
+    }
+
+    &:focus {
+      border: 2px solid black;
+    }
   }
 
   .visibleIcon {

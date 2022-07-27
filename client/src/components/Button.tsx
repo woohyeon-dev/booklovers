@@ -9,6 +9,9 @@ type props = {
   iconColor?: ColorType;
   value: string;
   color?: ColorType;
+  border?: string;
+  boxShadow?: string;
+  borderRadius?: string;
   bgColor?: ColorType;
   type?: 'button' | 'submit' | 'reset';
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -24,29 +27,34 @@ const Button = (props: props) => {
   );
 };
 
-const StyledButton = styled.button<{ color?: string; bgColor?: string }>`
+const StyledButton = styled.button<{
+  color?: ColorType;
+  border?: string;
+  bgColor?: ColorType;
+  borderRadius?: string;
+  boxShadow?: string;
+}>`
   display: flex;
   width: 100%;
   height: 44px;
   line-height: 44px;
   justify-content: center;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 7px -1px;
-  /* -webkit-user-select: none;
-  user-select: none; */
-  border: 1px solid black;
+  box-shadow: ${(props) => props.boxShadow || 'rgba(0, 0, 0, 0.25) 0px 0px 7px -1px;'};
+  border: ${(props) => props.border || 'none'};
+  border-radius: ${(props) => props.borderRadius || 'none'};
   color: ${(props) => props.color || 'black'};
   background-color: ${(props) => props.bgColor || 'white'};
   &:hover {
     cursor: pointer;
     box-shadow: none;
-    transform: scale(0.994);
+    transform: scale(0.97);
   }
 
   .icon {
     width: 20px;
     height: 20px;
     margin-top: 12px;
-    margin-right: 3px;
+    margin-right: 6px;
   }
 `;
 

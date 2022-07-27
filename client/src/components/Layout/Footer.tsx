@@ -8,9 +8,13 @@ const Footer = () => {
       <a href="https://www.flaticon.com/free-icons/book" title="book icons">
         Book icons created by Smashicons - Flaticon
       </a>
-      &nbsp;&nbsp;
+      ,&nbsp;
       <a href="https://www.flaticon.com/free-icons/user" title="user icons">
         User icons created by Freepik - Flaticon
+      </a>
+      ,&nbsp;
+      <a href="https://www.flaticon.com/free-icons/add" title="add icons">
+        Add icons created by Pixel perfect - Flaticon
       </a>
     </FooterBox>
   );

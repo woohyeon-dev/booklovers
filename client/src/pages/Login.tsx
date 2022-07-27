@@ -70,7 +70,8 @@ const Login = () => {
         <Button
           value="Sign in with Facebook"
           Icon={AiFillFacebook}
-          iconColor={'#3b5998'}
+          iconColor="#3b5998"
+          border="1px solid black"
           type="button"
           onClick={(e) => {}}
         />
