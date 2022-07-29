@@ -2,13 +2,15 @@ import express from 'express';
 import Users from '../models/Users';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { verifyToken } from '../middlewares/VerifyToken';
+import { verifyToken } from '../middlewares/verifyToken';
+import { upload } from '../middlewares/upload';
+import fs from 'fs';
 
 const router = express.Router();
 
 router.post('/register', async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { nickname, email, password } = req.body;
     const exEmail = await Users.findOne({
       // 이메일 중복 검사
       attributes: ['email'],
@@ -26,13 +28,32 @@ router.post('/register', async (req, res, next) => {
     const hash = await bcrypt.hash(password, 12);
 
     await Users.create({
-      username,
+      nickname,
       email,
       password: hash,
-      nickname: email,
     });
 
     return res.json({ msg: 'Users registered successfully!' });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put('/profile', upload.single('photo'), async (req, res, next) => {
+  try {
+    console.log(req.body);
+    const { email, nickname, sex, birthday } = req.body;
+    await Users.update(
+      { nickname, sex, birthday, photo: req.file?.filename },
+      { where: { email } }
+    );
+    // const fileName = imageUrl.replace('/img/profile', '');
+    // if (fs.existsSync('public/profile' + fileName)) {
+    //   // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
+    //   fs.unlinkSync('public/profile' + fileName);
+    //   console.log('이미지 파일 삭제 성공');
+    // }
+    return res.send('');
   } catch (err) {
     next(err);
   }
@@ -45,7 +66,7 @@ router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await Users.findOne({
-      attributes: ['nickname', 'password'],
+      attributes: ['nickname', 'password', 'sex', 'birthday', 'photo'],
       where: { email },
     });
     if (!user) {
@@ -67,7 +88,15 @@ router.post('/login', async (req, res, next) => {
 
     // Access Token 생성
     const accessToken = jwt.sign(
-      { user: { nickname: user.nickname } },
+      {
+        user: {
+          email,
+          nickname: user.nickname,
+          sex: user.sex,
+          birthday: user.birthday,
+          photo: user.photo,
+        },
+      },
       ACCESS_TOKEN_SECRET,
       { expiresIn: '1h' }
     );
@@ -122,10 +151,17 @@ router.get('/token', async (req, res, next) => {
           return res.sendStatus(403);
         }
         console.log(decoded);
-        const nickname = user[0].nickname;
         // Access Token 생성
         const accessToken = jwt.sign(
-          { user: { nickname: nickname } },
+          {
+            user: {
+              email: user[0].email,
+              nickname: user[0].nickname,
+              sex: user[0].sex,
+              birthday: user[0].birthday,
+              photo: user[0].photo,
+            },
+          },
           ACCESS_TOKEN_SECRET,
           {
             expiresIn: '1d',
@@ -158,12 +194,12 @@ router.post('/logout', async (req, res, next) => {
     res.clearCookie('refreshToken');
     res.status(204).json({ msg: 'Invalid refresh token' });
   }
-  const nickname = user!.nickname;
+  const email = user!.email;
   await Users.update(
     { refresh_token: undefined },
     {
       where: {
-        nickname,
+        email,
       },
     }
   );

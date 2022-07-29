@@ -13,17 +13,17 @@ const Register = () => {
   const {
     props: { inputValue, onChange },
   } = useInput({
-    username: '',
+    nickname: '',
     email: '',
     password: '',
     re_password: '',
   });
-  const { username, email, password, re_password } = inputValue;
+  const { nickname, email, password, re_password } = inputValue;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password === re_password) {
-      const res = await axios.post('/auth/register', { username, email, password });
+      const res = await axios.post('/auth/register', { nickname, email, password });
       console.log(res.data.msg);
       navigate('/');
     } else {
@@ -35,13 +35,13 @@ const Register = () => {
     <FormContainer onSubmit={handleSubmit}>
       <RegisterBox>
         <Input
-          label="Username"
-          name="username"
+          label="Nickname"
+          name="nickname"
           type="text"
-          placeholder="Enter your full name"
+          placeholder="Enter your nickname"
           Icon={BiUser}
           required
-          value={username}
+          value={nickname}
           onChange={onChange}
         />
         <Input

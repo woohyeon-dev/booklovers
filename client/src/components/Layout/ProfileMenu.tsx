@@ -4,12 +4,11 @@ import styled from 'styled-components';
 import { RiEdit2Line, RiLogoutCircleRLine } from 'react-icons/ri';
 import axios from 'axios';
 
-const ProfileMenu = ({ setIsLoggedIn }) => {
+const ProfileMenu = () => {
   const handleLogout = async (e: React.MouseEvent<HTMLDivElement>) => {
     try {
       const res = await axios.post('/auth/logout');
       console.log(res.data.msg);
-      setIsLoggedIn(false);
     } catch (err) {
       console.error(err);
     }

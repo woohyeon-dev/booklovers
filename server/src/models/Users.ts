@@ -2,20 +2,20 @@ import { Model, DataTypes, Sequelize, CreationOptional } from 'sequelize';
 import db from './index';
 
 interface UserAttributes {
-  username: string;
   email: string;
   password: string;
-  nickname?: string;
+  photo?: string;
+  nickname: string;
   birthday?: Date;
   sex?: string;
   refresh_token?: string;
 }
 
 class Users extends Model<UserAttributes> {
-  public username!: string;
   public email!: string;
   public password!: string;
-  public nickname?: string;
+  public photo?: string;
+  public nickname!: string;
   public birthday?: Date;
   public sex?: string;
   public refresh_token?: string;
@@ -29,10 +29,6 @@ class Users extends Model<UserAttributes> {
 
 Users.init(
   {
-    username: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-    },
     email: {
       type: DataTypes.STRING(50),
       allowNull: false,
@@ -46,6 +42,10 @@ Users.init(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
+    photo: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
+    },
     nickname: {
       type: DataTypes.STRING(50),
       allowNull: false,
@@ -55,7 +55,7 @@ Users.init(
       allowNull: true,
     },
     sex: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.STRING(5),
       allowNull: true,
     },
     refresh_token: {

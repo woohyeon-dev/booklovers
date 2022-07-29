@@ -1,25 +1,15 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ProfileMenu } from '@components';
-import { refreshToken } from '../../utils/refreshToken';
 import profile from '../../assets/profile.jpeg';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-
-let currentPath = '';
+import axios from 'axios';
+import { refreshToken } from '../../utils/refreshToken';
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [visibleMenu, setVisibleMenu] = useState(false);
-
-  const navigate = useNavigate();
-  let location = useLocation();
-  // 새로고침
-  useEffect(() => {
-    if (currentPath === location.pathname) window.location.reload();
-    currentPath = location.pathname;
-  }, [location]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     getUser();
@@ -27,8 +17,8 @@ const Header = () => {
 
   const getUser = async () => {
     try {
-      const user = await axios.get('/auth/user');
-      setIsLoggedIn((current) => !current);
+      await axios.get('/auth/user');
+      setIsLoggedIn(true);
     } catch (err) {
       if (err.response.data.code === 2) {
         // Access token does not exist
@@ -37,18 +27,21 @@ const Header = () => {
         // Access token 재발급후 다시 요청
         if (result !== 'guest') {
           try {
-            const user = await axios.get('/auth/user');
-            setIsLoggedIn((current) => !current);
+            await axios.get('/auth/user');
+            setIsLoggedIn(true);
           } catch (err) {
+            setIsLoggedIn(false);
             console.error(err);
           }
+        } else {
+          setIsLoggedIn(false);
         }
       } else {
+        setIsLoggedIn(false);
         console.error(err);
       }
     }
   };
-
   return (
     <HeaderBox>
       <div className="headerContainer">
@@ -83,9 +76,9 @@ const Header = () => {
                   setVisibleMenu((current) => !current);
                 }}
               >
-                <img src={profile} alt="" />
+                <img src={profile} alt="" style={{ width: '24px', height: '24px' }} />
                 <MdOutlineKeyboardArrowDown />
-                {visibleMenu && <ProfileMenu setIsLoggedIn={setIsLoggedIn} />}
+                {visibleMenu && <ProfileMenu />}
               </div>
             </>
           )}

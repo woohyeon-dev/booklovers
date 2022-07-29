@@ -15,7 +15,7 @@ type props = {
   pattern?: string;
   title?: string;
   disabled?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const Input = ({ label, Icon, iconWidth = 20, type, ...rest }: props) => {

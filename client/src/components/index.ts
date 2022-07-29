@@ -9,7 +9,10 @@ import Input from './Input';
 import Button from './Button';
 import FormContainer from './FormContainer';
 import ProfileMenu from './Layout/ProfileMenu';
-import ProfileForm from './Profile/ProfileForm';
+import ProfileInfo from './Profile/ProfileInfo';
+import EditProfile from './Profile/EditProfile';
+import AntDesignDatePicker from './AntDesignDatePicker';
+import RadioGroup from './RadioGroup';
 
 export {
   BookClub,
@@ -19,9 +22,12 @@ export {
   Header,
   Main,
   Profile,
-  ProfileForm,
+  ProfileInfo,
+  EditProfile,
   Input,
   Button,
   FormContainer,
   ProfileMenu,
+  AntDesignDatePicker,
+  RadioGroup,
 };

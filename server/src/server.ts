@@ -3,9 +3,11 @@ import path from 'path';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import db from '../models';
+import multer from 'multer';
+import db from './models';
 
-import authRouter from '../routes/auth';
+// routes
+import authRouter from './routes/auth';
 
 const app = express();
 
@@ -24,6 +26,8 @@ app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(express.static(path.join(__dirname, '../../client/build'))); // Express에서 이미지, CSS 파일 및 JavaScript 파일과 같은 정적 파일을 제공
+
+app.use('/img', express.static('src/public'));
 
 app.use('/auth', authRouter);
 
