@@ -7,13 +7,14 @@ import styled from 'styled-components';
 type Props = {
   label?: string;
   startDate: Date;
+  onChange: (dateObj: moment.Moment, dateStr: string) => void;
 };
 
-const AntDesignDatePicker = ({ label, startDate }: Props) => {
+const AntDesignDatePicker = ({ label, startDate, onChange }: Props) => {
   return (
     <AntDesignDatePickerBox>
       <label className="label">{label}</label>
-      <DatePicker className="datePicker" defaultValue={moment(startDate, 'YYYY-MM-DD')} />
+      <DatePicker className="datePicker" defaultValue={moment(startDate, 'YYYY-MM-DD')} onChange={onChange} />
     </AntDesignDatePickerBox>
   );
 };

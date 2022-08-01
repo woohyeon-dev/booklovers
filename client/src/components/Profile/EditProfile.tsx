@@ -41,8 +41,11 @@ const EditProfile = ({ loggedUser, setEditable }) => {
     setSex(e.target.value);
   };
 
+  const handleBirthday = (dateObj: moment.Moment, dateStr: string): void => {
+    setBirthday(dateObj['_d']);
+  };
+
   const handleCancel = () => {
-    // setInputValue({ ...inputValue, ...loggedUser });
     setEditable(false);
   };
 
@@ -79,7 +82,7 @@ const EditProfile = ({ loggedUser, setEditable }) => {
         </div>
         <Input label="Nickname" name="nickname" type="text" value={nickname} onChange={handleNicknameInput} required />
         <RadioGroup label="Sex" options={['Men', 'Women']} value={sex} onChange={handleSexInput} />
-        <AntDesignDatePicker label="Birthday" startDate={birthday} />
+        <AntDesignDatePicker label="Birthday" startDate={birthday} onChange={handleBirthday} />
         <div className="btnGroup">
           <button className="profileBtn cancelBtn" type="button" onClick={handleCancel}>
             Cancel

@@ -1,47 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ProfileMenu } from '@components';
 import profile from '../../assets/profile.jpeg';
+import { useUser } from '../../utils/getUser';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import axios from 'axios';
-import { refreshToken } from '../../utils/refreshToken';
 
 const Header = () => {
   const [visibleMenu, setVisibleMenu] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const loggedUser = useUser();
 
-  useEffect(() => {
-    getUser();
-  }, []);
-
-  const getUser = async () => {
-    try {
-      await axios.get('/auth/user');
-      setIsLoggedIn(true);
-    } catch (err) {
-      if (err.response.data.code === 2) {
-        // Access token does not exist
-        // Aceess token 재발급해야 함
-        const result = await refreshToken();
-        // Access token 재발급후 다시 요청
-        if (result !== 'guest') {
-          try {
-            await axios.get('/auth/user');
-            setIsLoggedIn(true);
-          } catch (err) {
-            setIsLoggedIn(false);
-            console.error(err);
-          }
-        } else {
-          setIsLoggedIn(false);
-        }
-      } else {
-        setIsLoggedIn(false);
-        console.error(err);
-      }
-    }
-  };
   return (
     <HeaderBox>
       <div className="headerContainer">
@@ -58,7 +26,7 @@ const Header = () => {
           <Link className="nav" to="/community">
             Community
           </Link>
-          {!isLoggedIn && (
+          {!loggedUser && (
             <>
               <Link className="nav" to="/login">
                 Login
@@ -68,7 +36,7 @@ const Header = () => {
               </Link>
             </>
           )}
-          {isLoggedIn && (
+          {loggedUser && (
             <>
               <div
                 className="nav profile"

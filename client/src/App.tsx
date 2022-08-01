@@ -1,12 +1,10 @@
 import './style.css';
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Login, Register, Home, Error, Forgot } from '@pages';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import axios from 'axios';
-import { refreshToken } from './utils/refreshToken';
 
 const App = () => {
   return (

@@ -3,7 +3,6 @@ import path from 'path';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import multer from 'multer';
 import db from './models';
 
 // routes

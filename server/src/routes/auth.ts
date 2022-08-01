@@ -42,11 +42,13 @@ router.post('/register', async (req, res, next) => {
 router.put('/profile', upload.single('photo'), async (req, res, next) => {
   try {
     console.log(req.body);
+    console.log(req.file?.filename);
     const { email, nickname, sex, birthday } = req.body;
-    await Users.update(
-      { nickname, sex, birthday, photo: req.file?.filename },
-      { where: { email } }
-    );
+    // await Users.update(
+    //   { nickname, sex, birthday, photo: req.file?.filename },
+    //   { where: { email } }
+    // );
+
     // const fileName = imageUrl.replace('/img/profile', '');
     // if (fs.existsSync('public/profile' + fileName)) {
     //   // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
