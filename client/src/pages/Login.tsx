@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import styled from 'styled-components';
 import { Input, Button, FormContainer } from '@components';
 import { FiMail } from 'react-icons/fi';
@@ -16,7 +16,7 @@ const Login = () => {
     password: '',
   });
   const { email, password } = inputValue;
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const res = await axios.post('/auth/login', inputValue);

@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 const useInput = (initialValue: any, validator?: (arg: string) => boolean) => {
   const [inputValue, setInputValue] = useState(initialValue);
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value, name },
     } = event;

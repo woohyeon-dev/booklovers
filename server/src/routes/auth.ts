@@ -33,7 +33,7 @@ router.post('/register', async (req, res, next) => {
       password: hash,
     });
 
-    return res.json({ msg: 'Users registered successfully!' });
+    return res.json({ msg: 'User registration successful!' });
   } catch (err) {
     next(err);
   }
@@ -42,20 +42,23 @@ router.post('/register', async (req, res, next) => {
 router.put('/profile', upload.single('photo'), async (req, res, next) => {
   try {
     console.log(req.body);
-    console.log(req.file?.filename);
-    const { email, nickname, sex, birthday } = req.body;
-    // await Users.update(
-    //   { nickname, sex, birthday, photo: req.file?.filename },
-    //   { where: { email } }
-    // );
-
-    // const fileName = imageUrl.replace('/img/profile', '');
-    // if (fs.existsSync('public/profile' + fileName)) {
-    //   // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
-    //   fs.unlinkSync('public/profile' + fileName);
-    //   console.log('이미지 파일 삭제 성공');
-    // }
-    return res.send('');
+    const { email, nickname, gender, birthday, isCurrentImg } = req.body;
+    if (req.file || !isCurrentImg) {
+      const fileName = await Users.findOne({
+        attributes: ['photo'],
+        where: { email },
+      });
+      if (fs.existsSync('/uploads/profile' + fileName)) {
+        // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
+        fs.unlinkSync('/uploads/profile' + fileName);
+        console.log('이미지 파일 삭제 성공');
+      }
+    }
+    await Users.update(
+      { nickname, gender, birthday, photo: req.file?.filename },
+      { where: { email } }
+    );
+    return res.json({ msg: 'Edit Profile Successful!' });
   } catch (err) {
     next(err);
   }
@@ -68,7 +71,7 @@ router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await Users.findOne({
-      attributes: ['nickname', 'password', 'sex', 'birthday', 'photo'],
+      attributes: ['nickname', 'password', 'gender', 'birthday', 'photo'],
       where: { email },
     });
     if (!user) {
@@ -94,7 +97,7 @@ router.post('/login', async (req, res, next) => {
         user: {
           email,
           nickname: user.nickname,
-          sex: user.sex,
+          gender: user.gender,
           birthday: user.birthday,
           photo: user.photo,
         },
@@ -116,7 +119,7 @@ router.post('/login', async (req, res, next) => {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
     });
-    return res.status(200).json({ accessToken, amsg: 'Login successfully!' });
+    return res.status(200).json({ accessToken, amsg: 'Login successful!' });
   } catch (err) {
     next(err);
   }
@@ -159,7 +162,7 @@ router.get('/token', async (req, res, next) => {
             user: {
               email: user[0].email,
               nickname: user[0].nickname,
-              sex: user[0].sex,
+              gender: user[0].gender,
               birthday: user[0].birthday,
               photo: user[0].photo,
             },
@@ -169,7 +172,7 @@ router.get('/token', async (req, res, next) => {
             expiresIn: '1d',
           }
         );
-        return res.json({ accessToken, msg: 'Token Refresh Successfully!' });
+        return res.json({ accessToken, msg: 'Token Refresh Successful!' });
       }
     );
   } catch (err) {
@@ -206,7 +209,7 @@ router.post('/logout', async (req, res, next) => {
     }
   );
   res.clearCookie('refreshToken');
-  res.json({ msg: 'Logout successfully!' });
+  res.json({ msg: 'Logout successful!' });
 });
 
 export default router;

@@ -4,16 +4,16 @@ import { Input, Button } from '@components';
 import { RiEdit2Line } from 'react-icons/ri';
 
 const ProfileInfo = ({ loggedUser, setEditable }) => {
-  const { photo, nickname, sex, birthday } = loggedUser;
+  const { photo, nickname, gender, birthday } = loggedUser;
 
   return (
     <ProfileInfoBox>
       <div className="imageBox">
         {!photo && <div>none</div>}
-        {photo && <img className="preview" src={photo} alt="" />}
+        {photo && <img className="img" src={'/img/profile/' + photo} alt="" />}
       </div>
       <Input label="Nickname" name="nickname" type="text" value={nickname} disabled />
-      <Input label="Sex" name="sex" type="text" value={sex} disabled />
+      <Input label="Sex" name="gender" type="text" value={gender} disabled />
       <Input label="Birthday" name="birthday" type="text" value={birthday} disabled />
       <Button
         Icon={RiEdit2Line}
@@ -46,7 +46,7 @@ const ProfileInfoBox = styled.div`
     overflow: hidden;
   }
 
-  .preview {
+  .img {
     width: 100%;
     height: 100%;
     object-fit: cover;

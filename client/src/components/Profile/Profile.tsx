@@ -19,6 +19,7 @@ const Profile = () => {
   return (
     <ProfileBox>
       {loggedUser && (
+        // {(
         <>
           <div className="box">
             <h1>PROFILE</h1>

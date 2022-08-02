@@ -1,4 +1,4 @@
-import { Model, DataTypes, Sequelize, CreationOptional } from 'sequelize';
+import { Model, DataTypes, CreationOptional } from 'sequelize';
 import db from './index';
 
 interface UserAttributes {
@@ -7,7 +7,7 @@ interface UserAttributes {
   photo?: string;
   nickname: string;
   birthday?: Date;
-  sex?: string;
+  gender?: string;
   refresh_token?: string;
 }
 
@@ -17,7 +17,7 @@ class Users extends Model<UserAttributes> {
   public photo?: string;
   public nickname!: string;
   public birthday?: Date;
-  public sex?: string;
+  public gender?: string;
   public refresh_token?: string;
 
   // timestamps!
@@ -54,8 +54,8 @@ Users.init(
       type: DataTypes.DATEONLY, // DATE without time.
       allowNull: true,
     },
-    sex: {
-      type: DataTypes.STRING(5),
+    gender: {
+      type: DataTypes.STRING(10),
       allowNull: true,
     },
     refresh_token: {

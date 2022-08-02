@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { IconType } from 'react-icons';
 import styled from 'styled-components';
 
@@ -14,7 +14,7 @@ type props = {
   borderRadius?: string;
   bgColor?: ColorType;
   type?: 'button' | 'submit' | 'reset';
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 const Button = (props: props) => {

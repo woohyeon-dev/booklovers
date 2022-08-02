@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { RiEdit2Line, RiLogoutCircleRLine } from 'react-icons/ri';
 import axios from 'axios';
 
 const ProfileMenu = () => {
-  const handleLogout = async (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleLogout = async (e: MouseEvent<HTMLDivElement>) => {
     try {
       const res = await axios.post('/auth/logout');
       console.log(res.data.msg);

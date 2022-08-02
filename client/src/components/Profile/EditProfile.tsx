@@ -1,61 +1,39 @@
-import React, { useRef, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import styled from 'styled-components';
-import { Input, AntDesignDatePicker, RadioGroup } from '@components';
-import add from '../../assets/add.jpeg';
+import { Input, AntDesignDatePicker, RadioGroup, ChangeImage } from '@components';
 import axios from 'axios';
 import { RadioChangeEvent } from 'antd';
 
 const EditProfile = ({ loggedUser, setEditable }) => {
   const [selectedImage, setSelectedImage] = useState({
-    image_file: null,
-    preview_URL: null,
+    image_file: '', // 서버에 보낼 실제 이미지 파일
+    preview_URL: '/img/profile/' + loggedUser.photo, // 클라이언트에게 미리 보여줄 이미지의 경로
   });
-  const [nickname, setNickname] = useState('');
-  const [sex, setSex] = useState('');
+  const [nickname, setNickname] = useState(loggedUser.nickname);
+  const [gender, setGender] = useState(loggedUser.gender);
   const [birthday, setBirthday] = useState<Date>(new Date());
 
-  const imageInput = useRef<HTMLInputElement>(null);
-
-  const imageUpload = () => {
-    imageInput.current.click();
-  };
-
-  const changeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileReader = new FileReader();
-    if (e.target.files[0]) {
-      fileReader.readAsDataURL(e.target.files[0]);
-    }
-    fileReader.onload = () => {
-      setSelectedImage({
-        image_file: e.target.files[0],
-        preview_URL: fileReader.result,
-      });
-    };
-  };
-
-  const handleNicknameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNicknameInput = (e: ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
   };
 
-  const handleSexInput = (e: RadioChangeEvent) => {
-    setSex(e.target.value);
+  const handleGenderInput = (e: RadioChangeEvent) => {
+    setGender(e.target.value);
   };
 
   const handleBirthday = (dateObj: moment.Moment, dateStr: string): void => {
     setBirthday(dateObj['_d']);
   };
 
-  const handleCancel = () => {
-    setEditable(false);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const formData = new FormData();
       formData.append('photo', selectedImage.image_file);
+      formData.append('isCurrentImg', selectedImage.preview_URL);
+      formData.append('email', loggedUser.email);
       formData.append('nickname', nickname);
-      formData.append('sex', sex);
+      formData.append('gender', gender);
       formData.append('birthday', birthday.toString());
       const res = axios.put('/auth/profile', formData);
     } catch (err) {
@@ -65,26 +43,13 @@ const EditProfile = ({ loggedUser, setEditable }) => {
 
   return (
     <EditProfileBox>
-      <form className="profile" onSubmit={handleSubmit}>
-        <input
-          type="file"
-          ref={imageInput}
-          style={{ display: 'none' }}
-          accept="image/*"
-          required
-          onChange={changeImage}
-        />
-        <div className="imageBox" onClick={imageUpload}>
-          <>
-            {!selectedImage.preview_URL && <img src={add} alt="" />}
-            {selectedImage.preview_URL && <img className="preview" src={selectedImage.preview_URL} alt="" />}
-          </>
-        </div>
+      <form onSubmit={handleSubmit}>
+        <ChangeImage selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
         <Input label="Nickname" name="nickname" type="text" value={nickname} onChange={handleNicknameInput} required />
-        <RadioGroup label="Sex" options={['Men', 'Women']} value={sex} onChange={handleSexInput} />
+        <RadioGroup label="Gender" options={['Male', 'Female']} value={gender} onChange={handleGenderInput} />
         <AntDesignDatePicker label="Birthday" startDate={birthday} onChange={handleBirthday} />
         <div className="btnGroup">
-          <button className="profileBtn cancelBtn" type="button" onClick={handleCancel}>
+          <button className="profileBtn cancelBtn" type="button" onClick={() => setEditable(false)}>
             Cancel
           </button>
           <button className="profileBtn saveBtn">Save</button>
@@ -95,25 +60,15 @@ const EditProfile = ({ loggedUser, setEditable }) => {
 };
 
 const EditProfileBox = styled.div`
-  .profile {
-    display: grid;
-    margin-top: 12px;
-  }
+  display: grid;
+  margin-top: 12px;
 
-  .imageBox {
+  .userImg {
     width: 223px;
     height: 223px;
     margin-bottom: 10px;
     outline: 1px solid #d5d7db;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border-radius: 0.5rem;
-    overflow: hidden;
-  }
-
-  .preview {
     width: 100%;
     height: 100%;
     object-fit: cover;

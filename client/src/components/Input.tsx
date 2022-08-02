@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, MouseEvent, useState } from 'react';
 import styled from 'styled-components';
 import { IconType } from 'react-icons/lib';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
@@ -15,13 +15,13 @@ type props = {
   pattern?: string;
   title?: string;
   disabled?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const Input = ({ label, Icon, iconWidth = 20, type, ...rest }: props) => {
   const [inputType, setInputType] = useState(type);
   const [visible, setVisible] = useState(false);
-  const toggleIcon = (e: React.MouseEvent<SVGElement>) => {
+  const toggleIcon = (e: MouseEvent<SVGElement>) => {
     setVisible((current) => {
       if (!current) {
         setInputType('text');

@@ -13,6 +13,7 @@ import ProfileInfo from './Profile/ProfileInfo';
 import EditProfile from './Profile/EditProfile';
 import AntDesignDatePicker from './AntDesignDatePicker';
 import RadioGroup from './RadioGroup';
+import ChangeImage from './Profile/ChangeImage';
 
 export {
   BookClub,
@@ -30,4 +31,5 @@ export {
   ProfileMenu,
   AntDesignDatePicker,
   RadioGroup,
+  ChangeImage,
 };

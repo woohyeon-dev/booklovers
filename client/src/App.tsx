@@ -35,11 +35,6 @@ const GlobalStyle = createGlobalStyle`
     font-weight: normal;
     font-style: normal;
   }
-  * {
-    box-sizing: border-box;
-    -webkit-user-select: none;
-    user-select: none;
-  }
   body{
     background-color: #ffffff;
     font-family: 'ParkYongJun';
@@ -58,6 +53,11 @@ const GlobalStyle = createGlobalStyle`
   }
   img {
     display: block;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    user-select: none;
   }
 `;
 

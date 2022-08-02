@@ -26,7 +26,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(express.static(path.join(__dirname, '../../client/build'))); // Express에서 이미지, CSS 파일 및 JavaScript 파일과 같은 정적 파일을 제공
 
-app.use('/img', express.static('src/public'));
+app.use('/img', express.static('src/uploads'));
 
 app.use('/auth', authRouter);
 
