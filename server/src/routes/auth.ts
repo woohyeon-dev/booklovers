@@ -41,21 +41,27 @@ router.post('/register', async (req, res, next) => {
 
 router.put('/profile', upload.single('photo'), async (req, res, next) => {
   try {
-    console.log(req.body);
     const { email, nickname, gender, birthday, isCurrentImg } = req.body;
+    console.log(req.body);
     if (req.file || !isCurrentImg) {
-      const fileName = await Users.findOne({
+      const dbFileName = await Users.findOne({
         attributes: ['photo'],
         where: { email },
       });
-      if (fs.existsSync('/uploads/profile' + fileName)) {
+      console.log(123123, dbFileName?.photo);
+      if (
+        dbFileName?.photo &&
+        fs.existsSync('src/uploads/profile/' + dbFileName?.photo)
+      ) {
         // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
-        fs.unlinkSync('/uploads/profile' + fileName);
+        fs.unlinkSync('src/uploads/profile/' + dbFileName?.photo);
         console.log('이미지 파일 삭제 성공');
       }
     }
+    const fileName = req.file ? req.file.filename : '';
+    console.log('email : ', email);
     await Users.update(
-      { nickname, gender, birthday, photo: req.file?.filename },
+      { nickname, gender, birthday, photo: fileName },
       { where: { email } }
     );
     return res.json({ msg: 'Edit Profile Successful!' });
@@ -96,10 +102,6 @@ router.post('/login', async (req, res, next) => {
       {
         user: {
           email,
-          nickname: user.nickname,
-          gender: user.gender,
-          birthday: user.birthday,
-          photo: user.photo,
         },
       },
       ACCESS_TOKEN_SECRET,
@@ -161,10 +163,6 @@ router.get('/token', async (req, res, next) => {
           {
             user: {
               email: user[0].email,
-              nickname: user[0].nickname,
-              gender: user[0].gender,
-              birthday: user[0].birthday,
-              photo: user[0].photo,
             },
           },
           ACCESS_TOKEN_SECRET,
@@ -181,8 +179,12 @@ router.get('/token', async (req, res, next) => {
 });
 
 router.get('/user', verifyToken, async (req, res, next) => {
-  // @ts-ignore
-  return res.json(req.user);
+  const user = await Users.findOne({
+    attributes: ['email', 'nickname', 'gender', 'birthday', 'photo'],
+    // @ts-ignore
+    where: { email: req.user.email },
+  });
+  return res.json(user);
 });
 
 router.post('/logout', async (req, res, next) => {

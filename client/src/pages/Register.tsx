@@ -25,7 +25,7 @@ const Register = () => {
     if (password === re_password) {
       const res = await axios.post('/auth/register', { nickname, email, password });
       console.log(res.data.msg);
-      navigate('/login');
+      navigate('/login', { replace: true });
     } else {
       alert('Passwords must match');
     }

@@ -21,7 +21,7 @@ const Login = () => {
     try {
       const res = await axios.post('/auth/login', inputValue);
       axios.defaults.headers.common['Authorization'] = res.data.accessToken ? `Bearer ${res.data.accessToken}` : null;
-      navigate('/');
+      navigate('/', { replace: true });
     } catch (err) {
       alert(err.response.data.msg);
     }

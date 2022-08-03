@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ProfileInfo, EditProfile } from '@components';
-import { useUser } from '../../utils/getUser';
+import { getUser } from '../../utils/getUser';
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [editable, setEditable] = useState(false);
+  const [update, setUpdate] = useState(false);
+  const loggedUser = getUser(update);
   const navigate = useNavigate();
-  const loggedUser = useUser();
 
   useEffect(() => {
     if (!loggedUser) {
@@ -19,12 +20,11 @@ const Profile = () => {
   return (
     <ProfileBox>
       {loggedUser && (
-        // {(
         <>
           <div className="box">
             <h1>PROFILE</h1>
             {!editable && <ProfileInfo loggedUser={loggedUser} setEditable={setEditable} />}
-            {editable && <EditProfile loggedUser={loggedUser} setEditable={setEditable} />}
+            {editable && <EditProfile loggedUser={loggedUser} setEditable={setEditable} setUpdate={setUpdate} />}
           </div>
           <div className="box">
             <h1>WANT TO READ</h1>

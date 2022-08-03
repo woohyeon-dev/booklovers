@@ -10,7 +10,7 @@ const ProfileInfo = ({ loggedUser, setEditable }) => {
     <ProfileInfoBox>
       <div className="imageBox">
         {!photo && <div>none</div>}
-        {photo && <img className="img" src={'/img/profile/' + photo} alt="" />}
+        {photo && <img className="img" src={`/img/profile/${photo}`} alt="" />}
       </div>
       <Input label="Nickname" name="nickname" type="text" value={nickname} disabled />
       <Input label="Sex" name="gender" type="text" value={gender} disabled />

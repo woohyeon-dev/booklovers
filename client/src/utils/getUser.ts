@@ -2,16 +2,18 @@ import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { refreshToken } from './refreshToken';
 
-export const useUser = () => {
+export const getUser = (update: boolean = false) => {
   const [loggedUser, setLoggedUser] = useState(true);
 
   useEffect(() => {
     setUser();
-  }, []);
+  }, [update]);
 
   const setUser = async () => {
+    console.log('this is occured');
     try {
       const user = await axios.get('/auth/user');
+      console.log(user.data);
       setLoggedUser(user.data);
     } catch (err) {
       if (err.response.data.code === 2) {

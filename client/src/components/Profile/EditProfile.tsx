@@ -3,11 +3,13 @@ import styled from 'styled-components';
 import { Input, AntDesignDatePicker, RadioGroup, ChangeImage } from '@components';
 import axios from 'axios';
 import { RadioChangeEvent } from 'antd';
+import { getUser } from '../../utils/getUser';
 
-const EditProfile = ({ loggedUser, setEditable }) => {
+const EditProfile = ({ loggedUser, setEditable, setUpdate }) => {
+  const photoUrl = loggedUser.photo ? `/img/profile/${loggedUser.photo}` : '';
   const [selectedImage, setSelectedImage] = useState({
     image_file: '', // 서버에 보낼 실제 이미지 파일
-    preview_URL: '/img/profile/' + loggedUser.photo, // 클라이언트에게 미리 보여줄 이미지의 경로
+    preview_URL: photoUrl, // 클라이언트에게 미리 보여줄 이미지의 경로
   });
   const [nickname, setNickname] = useState(loggedUser.nickname);
   const [gender, setGender] = useState(loggedUser.gender);
@@ -25,7 +27,7 @@ const EditProfile = ({ loggedUser, setEditable }) => {
     setBirthday(dateObj['_d']);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const formData = new FormData();
@@ -35,7 +37,9 @@ const EditProfile = ({ loggedUser, setEditable }) => {
       formData.append('nickname', nickname);
       formData.append('gender', gender);
       formData.append('birthday', birthday.toString());
-      const res = axios.put('/auth/profile', formData);
+      const res = await axios.put('/auth/profile', formData);
+      setUpdate((current: boolean) => !current);
+      setEditable(false);
     } catch (err) {
       console.error(err);
     }

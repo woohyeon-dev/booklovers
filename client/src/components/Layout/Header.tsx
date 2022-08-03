@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ProfileMenu } from '@components';
 import profile from '../../assets/profile.jpeg';
-import { useUser } from '../../utils/getUser';
+import { getUser } from '../../utils/getUser';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
 const Header = () => {
   const [visibleMenu, setVisibleMenu] = useState(false);
-  const loggedUser = useUser();
+  const loggedUser = getUser();
 
   return (
     <HeaderBox>
@@ -41,7 +41,7 @@ const Header = () => {
               <div
                 className="nav profile"
                 onClick={() => {
-                  setVisibleMenu((current) => !current);
+                  setVisibleMenu((current: boolean) => !current);
                 }}
               >
                 <img src={profile} alt="" style={{ width: '24px', height: '24px' }} />
@@ -65,6 +65,8 @@ const HeaderBox = styled.div`
   border-bottom: 2px solid #f7f8f9;
 
   .headerContainer {
+    background-color: white;
+    border-bottom: 2px solid #f7f8f9;
     width: 1080px;
     height: 120px;
     margin: 0 auto;
@@ -79,7 +81,7 @@ const HeaderBox = styled.div`
     align-items: center;
     font-family: 'Unreal_science_orbit';
     font-size: 55px;
-    padding: 4px;
+    padding: 6px;
   }
 
   .navbar {
