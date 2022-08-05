@@ -28,6 +28,7 @@ router.post('/register', async (req, res, next) => {
     const hash = await bcrypt.hash(password, 12);
 
     await Users.create({
+      // idx 자동 생성
       nickname,
       email,
       password: hash,

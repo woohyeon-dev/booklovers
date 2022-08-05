@@ -2,6 +2,7 @@ import { Model, DataTypes, CreationOptional } from 'sequelize';
 import db from './index';
 
 interface UserAttributes {
+  idx?: number;
   email: string;
   password: string;
   photo?: string;
@@ -12,6 +13,7 @@ interface UserAttributes {
 }
 
 class Users extends Model<UserAttributes> {
+  public idx!: number;
   public email!: string;
   public password!: string;
   public photo?: string;
@@ -29,6 +31,12 @@ class Users extends Model<UserAttributes> {
 
 Users.init(
   {
+    idx: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     email: {
       type: DataTypes.STRING(50),
       allowNull: false,
