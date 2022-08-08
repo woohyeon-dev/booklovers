@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
-import { BookClub, Books, Footer, Community, Header, Main, Profile } from '@components';
+import { BookClub, Books, Footer, Header, Main, Profile } from '@components';
 
 const Home = () => {
   return (
@@ -12,7 +12,6 @@ const Home = () => {
           <Route path="" element={<Main />} />
           <Route path="bookclub" element={<BookClub />} />
           <Route path="books" element={<Books />} />
-          <Route path="community" element={<Community />} />
           <Route path="profile" element={<Profile />} />
           <Route path="*" element={<Navigate replace to="/error" />} />
         </Routes>

@@ -23,9 +23,6 @@ const Header = () => {
           <Link className="nav" to="/bookclub">
             Book Club
           </Link>
-          <Link className="nav" to="/community">
-            Community
-          </Link>
           {!loggedUser && (
             <>
               <Link className="nav" to="/login">
@@ -45,6 +42,7 @@ const Header = () => {
                 }}
               >
                 <img src={profile} alt="" style={{ width: '24px', height: '24px' }} />
+                <span>{loggedUser.nickname}</span>님
                 <MdOutlineKeyboardArrowDown />
                 {visibleMenu && <ProfileMenu />}
               </div>
@@ -70,7 +68,6 @@ const HeaderBox = styled.div`
     width: 1080px;
     height: 120px;
     margin: 0 auto;
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -90,6 +87,7 @@ const HeaderBox = styled.div`
   }
 
   .nav {
+    height: 26px;
     margin: 0 20px;
     padding: 4px;
     font-size: 18px;
@@ -100,14 +98,21 @@ const HeaderBox = styled.div`
   }
 
   .profile {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
     font-size: 16px;
     &:hover {
       cursor: pointer;
     }
   }
 
-  .profile > img {
-    margin-right: 4px;
+  .profile > span {
+    margin: 0 2px 0px 6px;
+    max-width: 76px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `;
 

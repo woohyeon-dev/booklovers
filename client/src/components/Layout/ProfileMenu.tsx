@@ -32,16 +32,22 @@ const ProfileMenuBox = styled.div`
   background-color: white;
   border: 1px solid black;
   position: absolute;
-  top: 90px;
-  right: -10px;
+  top: 50px;
+  right: 0px;
 
   .list {
     display: block;
     display: flex;
     align-items: center;
+    width: 148px;
     padding: 12px 24px 12px 12px;
+    touch-action: manipulation;
+
     &:hover {
       background-color: #dee0e3;
+      color: #1890ff;
+      cursor: pointer;
+      transition: color 0.3s;
     }
   }
 

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { refreshToken } from './refreshToken';
 
 export const getUser = (update: boolean = false) => {
-  const [loggedUser, setLoggedUser] = useState(true);
+  const [loggedUser, setLoggedUser] = useState({ email: '', nickname: '', gender: '', birthday: '', photo: '' });
 
   useEffect(() => {
     setUser();
@@ -33,7 +33,7 @@ export const getUser = (update: boolean = false) => {
       } else {
         console.error(err);
       }
-      setLoggedUser(false);
+      setLoggedUser(undefined);
     }
   };
 
