@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const dotenv = require('dotenv');
 
 //절대경로를 참조하기 위해 path를 불러오기
 const path = require('path');
@@ -11,6 +12,8 @@ const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 
 // Typescript(타입스크립트)를 빌드할 때 성능을 향상시키기 위한 플러그인를 불러오기
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+
+dotenv.config();
 
 module.exports = {
   // 번들 파일로 만들기 위한 시작 파일(entry)을 설정
@@ -105,6 +108,9 @@ module.exports = {
   // ./src/index.html 파일을 build 경로에 index.html로 파일을 생성
   // 파일을 생성할 때, Webpack(웹팩)이 만든 번들 파일(/js/app.js)를 HTML에 추가하여 생성
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(process.env),
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: 'public/index.html',

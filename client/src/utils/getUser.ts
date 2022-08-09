@@ -10,10 +10,8 @@ export const getUser = (update: boolean = false) => {
   }, [update]);
 
   const setUser = async () => {
-    console.log('this is occured');
     try {
       const user = await axios.get('/auth/user');
-      console.log(user.data);
       setLoggedUser(user.data);
     } catch (err) {
       if (err.response.data.code === 2) {
