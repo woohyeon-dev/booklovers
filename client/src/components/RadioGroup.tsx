@@ -32,7 +32,6 @@ const RadioGroupBox = styled.div`
     font-size: 15px;
     line-height: 20px;
     padding: 0 6px;
-    font-weight: bold;
   }
 
   .radioGroup {

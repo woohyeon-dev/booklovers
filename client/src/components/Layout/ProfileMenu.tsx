@@ -18,11 +18,11 @@ const ProfileMenu = () => {
     <ProfileMenuBox>
       <Link to="/profile" className="list">
         <RiEdit2Line className="icon" />
-        Edit Profile
+        프로필관리
       </Link>
       <div className="list" onClick={handleLogout}>
         <RiLogoutCircleRLine className="icon" />
-        Logout
+        로그아웃
       </div>
     </ProfileMenuBox>
   );

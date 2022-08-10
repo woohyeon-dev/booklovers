@@ -14,22 +14,22 @@ const Header = () => {
     <HeaderBox>
       <div className="headerContainer">
         <Link className="headerLogoBox" to="">
-          BookLovers
+          북러버스
         </Link>
         <div className="navbar">
           <Link className="nav" to="/search">
-            Search
+            도서검색
           </Link>
           <Link className="nav" to="/bookclub">
-            Book Club
+            북클럽
           </Link>
           {!loggedUser && (
             <>
               <Link className="nav" to="/login">
-                Login
+                로그인
               </Link>
               <Link className="nav" to="/register">
-                Sign up
+                회원가입
               </Link>
             </>
           )}
@@ -78,6 +78,7 @@ const HeaderBox = styled.div`
     align-items: center;
     font-family: 'Unreal_science_orbit';
     font-size: 55px;
+    font-weight: bold;
     padding: 6px;
   }
 

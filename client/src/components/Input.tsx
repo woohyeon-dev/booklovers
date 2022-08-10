@@ -62,7 +62,6 @@ const InputBox = styled.div`
     font-size: 15px;
     height: 20px;
     padding: 0 6px;
-    font-weight: bold;
   }
 
   .inputGroup {
@@ -84,6 +83,12 @@ const InputBox = styled.div`
     font-size: 14px;
     border: 1px solid #d5d7db;
     border-radius: 0.5rem;
+    letter-spacing: 0.7px;
+    word-spacing: 1.4px;
+
+    &::placeholder {
+      color: #d5d7db;
+    }
 
     &:disabled {
       border: 1px solid #d5d7db;

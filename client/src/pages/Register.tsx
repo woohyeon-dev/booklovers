@@ -27,7 +27,7 @@ const Register = () => {
       console.log(res.data.msg);
       navigate('/login', { replace: true });
     } else {
-      alert('Passwords must match');
+      alert('비밀번호가 일치하지 않습니다.');
     }
   };
 
@@ -35,56 +35,56 @@ const Register = () => {
     <FormContainer onSubmit={handleSubmit}>
       <RegisterBox>
         <Input
-          label="Nickname"
+          label="닉네임"
           name="nickname"
           type="text"
-          placeholder="Enter your nickname"
+          placeholder="사용하실 닉네임을 입력해주세요"
           Icon={BiUser}
           required
           value={nickname}
           onChange={onChange}
         />
         <Input
-          label="Email"
+          label="이메일"
           name="email"
           type="email"
-          placeholder="Enter your email"
+          placeholder="사용하실 이메일을 입력해주세요"
           Icon={FiMail}
           required
           value={email}
           onChange={onChange}
           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-          title="Email Address format is not valid."
+          title="이메일 주소 형식이 잘못되었습니다."
         />
         <Input
-          label="Password"
+          label="비밀번호"
           name="password"
           type="password"
-          placeholder="Enter your password"
+          placeholder="사용하실 비밀번호를 입력해주세요"
           Icon={AiOutlineLock}
           required
           value={password}
           onChange={onChange}
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
+          title="비밀번호는 하나 이상의 숫자와 대소문자를 포함해야 하고 8자 이상이어야 합니다."
         />
         <Input
-          label="Re-enter password"
+          label="비밀번호 확인"
           name="re_password"
           type="password"
-          placeholder="Enter your password"
+          placeholder="비밀번호를 한번 더 입력해주세요"
           Icon={AiOutlineLock}
           required
           value={re_password}
           onChange={onChange}
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
+          title="비밀번호는 하나 이상의 숫자와 대소문자를 포함해야 하고 8자 이상이어야 합니다."
         />
-        <Button value="Create account" bgColor="#2c5282" color="white" onClick={(e) => {}} />
+        <Button value="회원가입" bgColor="#2c5282" color="white" onClick={(e) => {}} />
         <div className="registerGroup">
-          <span>Aleady have an account?</span>
+          <span>이미 계정이 있으신가요?</span>
           <Link className="linkBtn" to="/login">
-            Log in
+            로그인
           </Link>
         </div>
       </RegisterBox>

@@ -48,16 +48,24 @@ const EditProfile = ({ loggedUser, setEditable, setUpdate }) => {
     <EditProfileBox>
       <form onSubmit={handleSubmit}>
         <ChangeImage selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
-        <Input label="Nickname" name="nickname" type="text" value={nickname} onChange={handleNicknameInput} required />
+        <Input
+          label="닉네임"
+          placeholder="사용하실 닉네임을 입력해주세요"
+          name="nickname"
+          type="text"
+          value={nickname}
+          onChange={handleNicknameInput}
+          required
+        />
         <div className="radioGroupWrapper">
-          <RadioGroup label="Gender" options={['Male', 'Female']} value={gender} onChange={handleGenderInput} />
+          <RadioGroup label="성별" options={['남성', '여성']} value={gender} onChange={handleGenderInput} />
         </div>
-        <AntDesignDatePicker label="Birthday" startDate={birthday} onChange={handleBirthday} />
+        <AntDesignDatePicker label="생년월일" startDate={birthday} onChange={handleBirthday} />
         <div className="btnGroup">
           <button className="profileBtn cancelBtn" type="button" onClick={() => setEditable(false)}>
-            Cancel
+            취소
           </button>
-          <button className="profileBtn saveBtn">Save</button>
+          <button className="profileBtn saveBtn">확이</button>
         </div>
       </form>
     </EditProfileBox>

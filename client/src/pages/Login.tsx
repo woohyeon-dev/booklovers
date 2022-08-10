@@ -30,10 +30,10 @@ const Login = () => {
     <FormContainer onSubmit={handleSubmit}>
       <LoginBox>
         <Input
-          label="Email"
+          label="이메일"
           name="email"
           type="email"
-          placeholder="name@domain.com"
+          placeholder="이메일을 입력해주세요"
           Icon={FiMail}
           iconWidth={15}
           value={email}
@@ -42,33 +42,33 @@ const Login = () => {
           title="Email Address format is not valid."
         />
         <Input
-          label="Password"
+          label="비밀번호"
           name="password"
           type="password"
-          placeholder="at least 8 characters"
+          placeholder="비밀번호를 입력해주세요(최소 8자)"
           Icon={AiOutlineLock}
           value={password}
           onChange={onChange}
         />
         <div className="optionGroup">
           <label className="checkLabel">
-            <span className="labelText">Remember me</span>
+            <span className="labelText">아이디 저장</span>
             <input className="check" type="checkbox" />
           </label>
           <Link className="forgot" to="/forgot">
-            Forgot password?
+            비밀번호 찾기
           </Link>
         </div>
-        <Button value="Log in" bgColor="#2c5282" color="white" onClick={(e) => {}} />
+        <Button value="로그인" bgColor="#2c5282" color="white" onClick={(e) => {}} />
         <div className="registerGroup">
-          <span>Don't have an account?</span>
+          <span>아직 가입하지 않으셨나요?</span>
           <Link className="linkBtn" to="/register">
-            Sign up
+            회원가입
           </Link>
         </div>
         <div className="divider text-gray-500">or</div>
         <Button
-          value="Sign in with Facebook"
+          value="페이스북으로 이용하기"
           Icon={AiFillFacebook}
           iconColor="#3b5998"
           border="1px solid black"

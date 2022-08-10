@@ -19,9 +19,7 @@ router.post('/register', async (req, res, next) => {
       },
     });
     if (exEmail) {
-      return res
-        .status(400)
-        .json({ msg: 'This email is already registered as a member.' });
+      return res.status(400).json({ msg: '이미 가입된 이메일입니다.' });
     }
 
     // bcrypt - 비밀번호 해쉬화하기
@@ -34,7 +32,7 @@ router.post('/register', async (req, res, next) => {
       password: hash,
     });
 
-    return res.json({ msg: 'User registration successful!' });
+    return res.json({ msg: '회원가입 성공' });
   } catch (err) {
     next(err);
   }
@@ -43,13 +41,11 @@ router.post('/register', async (req, res, next) => {
 router.put('/profile', upload.single('photo'), async (req, res, next) => {
   try {
     const { email, nickname, gender, birthday, isCurrentImg } = req.body;
-    console.log(req.body);
     if (req.file || !isCurrentImg) {
       const dbFileName = await Users.findOne({
         attributes: ['photo'],
         where: { email },
       });
-      console.log(123123, dbFileName?.photo);
       if (
         dbFileName?.photo &&
         fs.existsSync('src/uploads/profile/' + dbFileName?.photo)
@@ -65,7 +61,7 @@ router.put('/profile', upload.single('photo'), async (req, res, next) => {
       { nickname, gender, birthday, photo: fileName },
       { where: { email } }
     );
-    return res.json({ msg: 'Edit Profile Successful!' });
+    return res.json({ msg: '프로필 수정 완료' });
   } catch (err) {
     next(err);
   }
@@ -82,9 +78,7 @@ router.post('/login', async (req, res, next) => {
       where: { email },
     });
     if (!user) {
-      return res
-        .status(400)
-        .json({ msg: 'Login Failed! You entered an invalid email.' });
+      return res.status(400).json({ msg: '이메일을 확인해주세요' });
     }
 
     // 비밀번호 비교 체크
@@ -93,9 +87,7 @@ router.post('/login', async (req, res, next) => {
     const isCorrect = await bcrypt.compare(password, user.password);
     if (isCorrect) {
     } else {
-      return res
-        .status(400)
-        .json({ msg: 'Login Failed! You entered an invalid password.' });
+      return res.status(400).json({ msg: '비밀번호를 확인해주세요.' });
     }
 
     // Access Token 생성
@@ -122,7 +114,7 @@ router.post('/login', async (req, res, next) => {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
     });
-    return res.status(200).json({ accessToken, amsg: 'Login successful!' });
+    return res.status(200).json({ accessToken, msg: '로그인 성공' });
   } catch (err) {
     next(err);
   }
@@ -212,7 +204,7 @@ router.post('/logout', async (req, res, next) => {
     }
   );
   res.clearCookie('refreshToken');
-  return res.json({ msg: 'Logout successful!' });
+  return res.json({ msg: '로그아웃 성공' });
 });
 
 export default router;

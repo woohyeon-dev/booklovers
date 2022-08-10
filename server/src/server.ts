@@ -50,9 +50,7 @@ app.get('*', (req: Request, res: Response) => {
 // Error handler middleware
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error(err);
-  res
-    .status(err.status || 500)
-    .json({ msg: 'The server encountered an error.' });
+  res.status(err.status || 500).json({ msg: '서버에서 에러가 발생했습니다.' });
 });
 
 app.listen(app.get('port'), async () => {

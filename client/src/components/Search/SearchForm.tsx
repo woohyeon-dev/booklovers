@@ -29,17 +29,17 @@ const SearchForm = ({ setSearchWord, setSearchResult, setTotalCnt }) => {
   return (
     <SearchFormBox>
       <form onSubmit={handleSubmit}>
-        <RadioGroup options={['title', 'isbn']} value={searchType} onChange={() => {}} />
+        <RadioGroup options={['제목', 'ISBN']} value={searchType} onChange={() => {}} />
         <input
           className="searchInput"
           type="text"
-          placeholder="Enter the book title"
+          placeholder="책 제목을 입력하세요"
           onChange={(e) => {
             setQuery(e.target.value);
           }}
           required
         />
-        <button>search</button>
+        <button>검색</button>
       </form>
     </SearchFormBox>
   );
@@ -66,7 +66,7 @@ const SearchFormBox = styled.div`
     background-color: white;
     width: 500px;
     height: 44px;
-    padding: 0 11px;
+    padding: 0 14px;
     margin: 0 14px;
     border: 1px solid #d5d7db;
     border-radius: 0.5rem;
@@ -75,6 +75,7 @@ const SearchFormBox = styled.div`
   button {
     background-color: #3e4549;
     border-radius: 0.5rem;
+    font-size: 16px;
     color: white;
     height: 44px;
     padding: 0 14px;

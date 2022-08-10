@@ -13,18 +13,18 @@ function FormContainer({ onSubmit, children }) {
         <form className="loginFormBox" onSubmit={onSubmit}>
           <Link to="/" className="logo">
             <img className="logoIcon" src={favicon} alt="" />
-            <span>BookLovers</span>
+            <span>북러버스</span>
           </Link>
           {pathname.startsWith('login') && (
             <>
-              <div className="title">Log in.</div>
-              <div className="subTitle">Log in with your data that you entered during your registration.</div>
+              <div className="title">로그인.</div>
+              <div className="subTitle">회원가입 시 입력한 정보로 로그인하세요.</div>
             </>
           )}
           {pathname.startsWith('register') && (
             <>
-              <div className="title">Register.</div>
-              <div className="subTitle">Create your account.</div>
+              <div className="title">회원가입.</div>
+              <div className="subTitle">계정을 만듭니다.</div>
             </>
           )}
           {children}

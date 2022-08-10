@@ -12,12 +12,12 @@ const ProfileInfo = ({ loggedUser, setEditable }) => {
         {!photo && <div>none</div>}
         {photo && <img className="img" src={`/img/profile/${photo}`} alt="" />}
       </div>
-      <Input label="Nickname" name="nickname" type="text" value={nickname} disabled />
-      <Input label="Sex" name="gender" type="text" value={gender} disabled />
-      <Input label="Birthday" name="birthday" type="text" value={birthday} disabled />
+      <Input label="닉네임" name="nickname" type="text" value={nickname} disabled />
+      <Input label="성별" name="gender" type="text" value={gender} disabled />
+      <Input label="생년월일" name="birthday" type="text" value={birthday} disabled />
       <Button
         Icon={RiEdit2Line}
-        value="Edit Profile"
+        value="프로필 수정"
         type="button"
         border="1px solid #d5d7db"
         boxShadow="none"

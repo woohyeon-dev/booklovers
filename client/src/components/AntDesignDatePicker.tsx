@@ -27,7 +27,6 @@ const AntDesignDatePickerBox = styled.div`
     font-size: 15px;
     height: 20px;
     padding: 0 6px;
-    font-weight: bold;
   }
 
   .datePicker {
