@@ -27,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Unreal_science_orbit';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/Unreal_science_orbit.woff2') format('woff2');
     font-weight: normal;
-    font-style: normal;
+    font-style: normal;    
   }
   @font-face {
     font-family: 'ParkYongJun';

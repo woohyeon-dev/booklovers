@@ -16,17 +16,19 @@ type SearchResultType = {
 const SearchResult = ({ searchResults }) => {
   return (
     <SearchResultBox>
-      {searchResults.map((result: SearchResultType, index: number) => (
-        <div className="wrapper" key={index}>
-          <div className="coverBox">
-            <img className="cover" src={result.image} />
+      {searchResults.length > 0 &&
+        searchResults.map((result: SearchResultType, index: number) => (
+          <div className="wrapper" key={index}>
+            <div className="coverBox">
+              <img className="cover" src={result.image} />
+            </div>
+            <div className="info">
+              <div className="title">{result.title}</div>
+              <div className="description">{result.description}</div>
+            </div>
           </div>
-          <div className="info">
-            <div className="title">{result.title}</div>
-            <div className="description">{result.description}</div>
-          </div>
-        </div>
-      ))}
+        ))}
+      {searchResults.length <= 0 && <div>요청하신 검색어에 대한 검색결과가 없습니다.</div>}
     </SearchResultBox>
   );
 };
@@ -52,9 +54,6 @@ const SearchResultBox = styled.div`
   .cover {
     width: 100%;
     height: 200px;
-  }
-
-  .info {
   }
 
   .title {
