@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Input, AntDesignDatePicker, RadioGroup, ChangeImage } from '@components';
 import axios from 'axios';
 import { RadioChangeEvent } from 'antd';
-import { getUser } from '../../utils/getUser';
 
 const EditProfile = ({ loggedUser, setEditable, setUpdate }) => {
   const photoUrl = loggedUser.photo ? `/img/profile/${loggedUser.photo}` : '';
@@ -50,7 +49,9 @@ const EditProfile = ({ loggedUser, setEditable, setUpdate }) => {
       <form onSubmit={handleSubmit}>
         <ChangeImage selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
         <Input label="Nickname" name="nickname" type="text" value={nickname} onChange={handleNicknameInput} required />
-        <RadioGroup label="Gender" options={['Male', 'Female']} value={gender} onChange={handleGenderInput} />
+        <div className="radioGroupWrapper">
+          <RadioGroup label="Gender" options={['Male', 'Female']} value={gender} onChange={handleGenderInput} />
+        </div>
         <AntDesignDatePicker label="Birthday" startDate={birthday} onChange={handleBirthday} />
         <div className="btnGroup">
           <button className="profileBtn cancelBtn" type="button" onClick={() => setEditable(false)}>
@@ -77,6 +78,14 @@ const EditProfileBox = styled.div`
     height: 100%;
     object-fit: cover;
     border-radius: 0.5rem;
+  }
+
+  .radioGroupWrapper {
+    padding-top: 10px;
+  }
+
+  .radioGroup {
+    border: 1px solid #d5d7db;
   }
 
   .btnGroup {

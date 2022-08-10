@@ -200,7 +200,7 @@ router.post('/logout', async (req, res, next) => {
   });
   if (!user) {
     res.clearCookie('refreshToken');
-    res.status(204).json({ msg: 'Invalid refresh token' });
+    return res.status(204).json({ msg: 'Invalid refresh token' });
   }
   const email = user!.email;
   await Users.update(
@@ -212,7 +212,7 @@ router.post('/logout', async (req, res, next) => {
     }
   );
   res.clearCookie('refreshToken');
-  res.json({ msg: 'Logout successful!' });
+  return res.json({ msg: 'Logout successful!' });
 });
 
 export default router;

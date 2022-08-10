@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import db from './models';
 
 // routes
+import { createProxyMiddleware } from 'http-proxy-middleware';
 import authRouter from './routes/auth';
 
 const app = express();
@@ -27,6 +28,18 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.static(path.join(__dirname, '../../client/build'))); // Express에서 이미지, CSS 파일 및 JavaScript 파일과 같은 정적 파일을 제공
 
 app.use('/img', express.static('src/uploads'));
+
+app.use(
+  createProxyMiddleware('/api', {
+    target: 'https://openapi.naver.com',
+    changeOrigin: true,
+    // 하단 처리는 필수로 해주어야 한다. 아래의 내용이 없으면 url 경로에
+    // api가 추가되어 경로를 찾을 수 없어진다.
+    pathRewrite: {
+      '^/api/': '/',
+    },
+  })
+);
 
 app.use('/auth', authRouter);
 

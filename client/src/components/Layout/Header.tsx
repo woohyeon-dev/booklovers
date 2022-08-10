@@ -17,8 +17,8 @@ const Header = () => {
           BookLovers
         </Link>
         <div className="navbar">
-          <Link className="nav" to="/books">
-            Books
+          <Link className="nav" to="/search">
+            Search
           </Link>
           <Link className="nav" to="/bookclub">
             Book Club

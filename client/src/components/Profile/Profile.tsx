@@ -7,16 +7,23 @@ import { useNavigate } from 'react-router-dom';
 const Profile = () => {
   const [editable, setEditable] = useState(false);
   const [update, setUpdate] = useState(false);
-  const loggedUser = getUser(update);
+  let loggedUser = getUser(update);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!loggedUser) {
-      alert('Available after login');
-      navigate('/login');
-    }
-  }, [loggedUser]);
+  // useEffect(() => {
+  //   if (!loggedUser) {
+  //     alert('Available after login');
+  //     navigate('/login');
+  //   }
+  // }, [loggedUser]);
 
+  loggedUser = {
+    photo: '',
+    email: '',
+    nickname: '',
+    gender: '',
+    birthday: '',
+  };
   return (
     <ProfileBox>
       {loggedUser && (
@@ -37,7 +44,7 @@ const Profile = () => {
 };
 
 const ProfileBox = styled.div`
-  margin: 20px 0;
+  margin: 40px 0;
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-gap: 20px;
