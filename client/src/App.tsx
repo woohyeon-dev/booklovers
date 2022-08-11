@@ -1,25 +1,22 @@
 import './style.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Login, Register, Home, Error, Forgot } from '@pages';
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import reset from 'styled-reset';
+import Router from './Router';
+import { theme } from './theme';
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot" element={<Forgot />} />
-        <Route path="/*" element={<Home />} />
-        <Route path="/error" element={<Error />} />
-      </Routes>
-    </BrowserRouter>
+      <Router />
+    </ThemeProvider>
   );
 };
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -35,8 +32,14 @@ const GlobalStyle = createGlobalStyle`
     font-weight: normal;
     font-style: normal;
   }
+  * {
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    user-select: none;
+ 
+  }
   body{
-    background-color: #ffffff;
+    color: ${(props) => props.theme.textColor};
     font-family: 'ParkYongJun';
   }
   a {
@@ -54,12 +57,5 @@ const GlobalStyle = createGlobalStyle`
   img {
     display: block;
   }
-  * {
-    box-sizing: border-box;
-    -webkit-user-select: none;
-    user-select: none;
-  }
+  
 `;
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);

@@ -71,8 +71,8 @@ const ImageBox = styled.div`
   width: 223px;
   height: 223px;
   margin-bottom: 10px;
-  outline: 1px solid #d5d7db;
-  background-color: #ffffff;
+  outline: 1px solid ${(props) => props.theme.borderColor};
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,8 +96,8 @@ const DeleteBtn = styled.button`
   top: 6px;
   right: 6px;
   z-index: 1;
-  background-color: #ecedef;
-  color: #db5f6c;
+  background-color: #f7f8f9;
+  color: ${(props) => props.theme.accentColor};
   font-weight: bold;
 `;
 

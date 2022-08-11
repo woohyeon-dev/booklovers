@@ -39,7 +39,7 @@ const ImageBox = styled.div`
   margin-bottom: 10px;
   background-color: #f7f8f9;
   color: #88929c;
-  outline: 1px solid #d5d7db;
+  outline: 1px solid ${(props) => props.theme.borderColor};
   display: flex;
   justify-content: center;
   align-items: center;

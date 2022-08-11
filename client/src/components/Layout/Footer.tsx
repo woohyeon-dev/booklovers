@@ -21,9 +21,9 @@ const Footer = () => {
 };
 
 const FooterBox = styled.div`
-  border-top: 2px solid #f7f8f9;
+  border-top: 2px solid ${(props) => props.theme.lightborderColor};
   text-align: center;
-  color: #aab1b8;
+  color: ${(props) => props.theme.borderColor};
   line-height: 30px;
   font-size: 13px;
 `;

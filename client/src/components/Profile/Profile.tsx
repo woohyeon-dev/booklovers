@@ -7,22 +7,22 @@ import { useNavigate } from 'react-router-dom';
 const Profile = () => {
   const [editable, setEditable] = useState(false);
   const [update, setUpdate] = useState(false);
-  const loggedUser = getUser(update);
+  // const loggedUser = getUser(update);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!loggedUser) {
-      alert('Available after login');
-      navigate('/login');
-    }
-  }, [loggedUser]);
+  // useEffect(() => {
+  //   if (!loggedUser) {
+  //     alert('Available after login');
+  //     navigate('/login');
+  //   }
+  // }, [loggedUser]);
 
-  // const loggedUser = {
-  //   photo: '',
-  //   nickname: '',
-  //   gender: '',
-  //   birthday: '',
-  // };
+  const loggedUser = {
+    photo: '',
+    nickname: '',
+    gender: '',
+    birthday: '',
+  };
 
   return (
     <ProfileBox>
@@ -52,7 +52,7 @@ const ProfileBox = styled.div`
 
 const Box = styled.div`
   height: fit-content;
-  border: 1px solid #d5d7db;
+  border: 1px solid ${(props) => props.theme.borderColor};
   padding: 20px;
   border-radius: 0.5rem;
 

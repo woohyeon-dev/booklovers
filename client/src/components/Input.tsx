@@ -86,17 +86,16 @@ const StyledInput = styled.input`
   height: 44px;
   padding: 0 16px;
   font-size: 14px;
-  border: 1px solid #d5d7db;
+  border: 1px solid ${(props) => props.theme.borderColor};
   border-radius: 0.5rem;
   letter-spacing: 0.7px;
   word-spacing: 1.4px;
 
   &::placeholder {
-    color: #d5d7db;
+    color: #aab1b8;
   }
 
   &:disabled {
-    border: 1px solid #d5d7db;
     background-color: #f7f8f9;
   }
 

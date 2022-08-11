@@ -34,8 +34,8 @@ const RadioGroupBox = styled.div`
     padding-left: 11px;
     display: flex;
     align-items: center;
-    background-color: white;
-    border: 1px solid #d5d7db;
+    background-color: #ffffff;
+    border: 1px solid ${(props) => props.theme.borderColor};
   }
 `;
 

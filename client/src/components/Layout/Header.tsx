@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { ProfileMenu } from '@components';
 import profile from '../../assets/profile.jpeg';
 import { getUser } from '../../utils/getUser';
@@ -45,17 +45,17 @@ const Header = () => {
 };
 
 const HeaderBox = styled.div`
-  background-color: white;
+  background-color: ${(props) => props.theme.headerColor};
   height: 120px;
   position: sticky;
   z-index: 10;
   top: 0;
-  border-bottom: 2px solid #f7f8f9;
+  border-bottom: 2px solid ${(props) => props.theme.borderColor};
 `;
 
 const HeaderContainer = styled.div`
-  background-color: white;
-  border-bottom: 2px solid #f7f8f9;
+  background-color: ${(props) => props.theme.headerColor};
+  border-bottom: 2px solid ${(props) => props.theme.borderColor};
   width: 1080px;
   height: 120px;
   margin: 0 auto;

@@ -99,7 +99,7 @@ const SaveBtn = styled(Btn)`
 `;
 
 const CancelBtn = styled(Btn)`
-  border: 1px solid #d5d7db;
+  border: 1px solid ${(props) => props.theme.borderColor};
   background-color: #f7f8f9;
   color: #88929c;
 `;

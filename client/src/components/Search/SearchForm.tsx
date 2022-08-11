@@ -61,8 +61,8 @@ const SearchForm = ({ setSearchWord, setSearchResult, setTotalCnt }) => {
 
 const SearchFormBox = styled.div`
   font-size: 18px;
-  background-color: #f7f8f9;
-  border: 1px solid #d5d7db;
+  background-color: ${(props) => props.theme.headerColor};
+  border: 1px solid ${(props) => props.theme.borderColor};
 `;
 
 const Form = styled.form`
@@ -78,7 +78,7 @@ const Input = styled.input`
   height: 44px;
   padding: 0 14px;
   margin: 0 14px;
-  border: 1px solid #d5d7db;
+  border: 1px solid ${(props) => props.theme.borderColor};
   border-radius: 0.5rem;
 `;
 
