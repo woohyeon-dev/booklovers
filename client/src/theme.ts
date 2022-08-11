@@ -6,4 +6,5 @@ export const theme: DefaultTheme = {
   borderColor: '#d5d7db',
   lightborderColor: '#ecf0f1',
   accentColor: '#e84118',
+  activeColor: '#3c40c6',
 };

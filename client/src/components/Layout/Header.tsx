@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useMatch } from 'react-router-dom';
 import styled from 'styled-components';
 import { ProfileMenu } from '@components';
 import profile from '../../assets/profile.jpeg';
@@ -9,18 +9,24 @@ import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 const Header = () => {
   const [visibleMenu, setVisibleMenu] = useState(false);
   const loggedUser = getUser();
+  const searchMatch = useMatch('/search');
+  const bookclubMatch = useMatch('/bookclub');
 
   return (
     <HeaderBox>
       <HeaderContainer>
         <LogoLink to="">북러버스</LogoLink>
         <Navbar>
-          <NavLink to="/search">도서검색</NavLink>
-          <NavLink to="/bookclub">북클럽</NavLink>
+          <Nav to="/search" style={{ color: searchMatch && '#3c40c6' }}>
+            도서검색
+          </Nav>
+          <Nav to="/bookclub" style={{ color: bookclubMatch && '#3c40c6' }}>
+            북클럽
+          </Nav>
           {!loggedUser && (
             <>
-              <NavLink to="/login">로그인</NavLink>
-              <NavLink to="/register">회원가입</NavLink>
+              <Nav to="/login">로그인</Nav>
+              <Nav to="/register">회원가입</Nav>
             </>
           )}
           {loggedUser && (
@@ -32,7 +38,7 @@ const Header = () => {
                 }}
               >
                 <img src={profile} alt="" style={{ width: '24px', height: '24px' }} />
-                <span>{loggedUser?.nickname}qwdwqdwqdwqd</span>님
+                <span>{loggedUser.nickname}</span>님
                 <MdOutlineKeyboardArrowDown />
                 {visibleMenu && <ProfileMenu />}
               </Profile>
@@ -79,7 +85,7 @@ const Navbar = styled.div`
   display: flex;
 `;
 
-const NavLink = styled(Link)`
+const Nav = styled(NavLink)`
   height: 26px;
   line-height: 26px;
   padding: 0 20px;
@@ -90,7 +96,7 @@ const NavLink = styled(Link)`
   }
 `;
 
-const Profile = styled(NavLink)`
+const Profile = styled(Nav)`
   position: relative;
   display: flex;
   justify-content: flex-end;

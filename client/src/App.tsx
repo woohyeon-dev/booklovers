@@ -45,6 +45,10 @@ const GlobalStyle = createGlobalStyle`
   a {
     color: inherit;
     text-decoration: none;
+
+    &:hover {
+    color: ${(props) => props.theme.activeColor};
+  }
   }
   input, button {
     background-color: transparent;

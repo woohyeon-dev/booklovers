@@ -7,5 +7,6 @@ declare module 'styled-components' {
     borderColor: string;
     lightborderColor: string;
     accentColor: string;
+    activeColor: string;
   }
 }
