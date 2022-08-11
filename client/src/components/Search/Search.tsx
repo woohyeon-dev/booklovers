@@ -133,14 +133,14 @@ const Search = () => {
   return (
     <SearchBox>
       <SearchForm setSearchWord={setSearchWord} setSearchResult={setSearchResult} setTotalCnt={setTotalCnt} />
-      <div className="searchInfoBox">
+      <SearchInfo>
         <div>
           검색어: <span>{searchWord}</span>
         </div>
         <div>
           <span>{totalCnt}</span>개의 검색결과 중 <span>{1}</span>페이지
         </div>
-      </div>
+      </SearchInfo>
       <SearchResult searchResults={searchResult} />
     </SearchBox>
   );
@@ -148,16 +148,16 @@ const Search = () => {
 
 const SearchBox = styled.div`
   margin: 40px 0;
+`;
 
-  .searchInfoBox {
-    display: flex;
-    justify-content: space-between;
-    font-size: 20px;
-    padding: 20px;
-    margin: 20px 0;
-    border-bottom: 2px solid black;
-    color: #3e4549;
-  }
+const SearchInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  padding: 20px;
+  margin: 20px 0;
+  border-bottom: 2px solid black;
+  color: #3e4549;
 
   span {
     color: black;

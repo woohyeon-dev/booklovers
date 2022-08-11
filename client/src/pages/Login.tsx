@@ -50,22 +50,18 @@ const Login = () => {
           value={password}
           onChange={onChange}
         />
-        <div className="optionGroup">
-          <label className="checkLabel">
-            <span className="labelText">아이디 저장</span>
-            <input className="check" type="checkbox" />
-          </label>
-          <Link className="forgot" to="/forgot">
-            비밀번호 찾기
-          </Link>
-        </div>
+        <OptionGroup>
+          <CheckLabel>
+            <span>아이디 저장</span>
+            <input type="checkbox" />
+          </CheckLabel>
+          <ForgotLink to="/forgot">비밀번호 찾기</ForgotLink>
+        </OptionGroup>
         <Button value="로그인" bgColor="#2c5282" color="white" onClick={(e) => {}} />
-        <div className="registerGroup">
+        <RegisterGroup>
           <span>아직 가입하지 않으셨나요?</span>
-          <Link className="linkBtn" to="/register">
-            회원가입
-          </Link>
-        </div>
+          <RegisterLink to="/register">회원가입</RegisterLink>
+        </RegisterGroup>
         <div className="divider text-gray-500">or</div>
         <Button
           value="페이스북으로 이용하기"
@@ -82,50 +78,50 @@ const Login = () => {
 
 const LoginBox = styled.div`
   width: 320px;
+`;
 
-  .optionGroup {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    padding: 14px 6px;
-  }
+const OptionGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 14px 6px;
+`;
 
-  .checkLabel {
-    display: flex;
-  }
+const CheckLabel = styled.label`
+  display: flex;
 
-  .labelText {
+  & > span {
     line-height: 16px;
   }
 
-  .check {
+  & > input {
     height: 16px;
     width: 16px;
     margin-left: 8px;
     cursor: pointer;
   }
+`;
 
-  .forgot {
-    font-weight: bold;
-    color: #2c5282;
-    text-decoration: underline;
-    text-underline-position: under;
-  }
+const ForgotLink = styled(Link)`
+  font-weight: bold;
+  color: #2c5282;
+  text-decoration: underline;
+  text-underline-position: under;
+`;
 
-  .registerGroup {
-    padding-top: 14px;
-    font-size: 13px;
-    height: 28px;
-    text-align: center;
-  }
+const RegisterGroup = styled.div`
+  padding-top: 14px;
+  font-size: 13px;
+  height: 28px;
+  text-align: center;
+`;
 
-  .linkBtn {
-    font-weight: bold;
-    color: #2c5282;
-    margin-left: 6px;
-    text-decoration: underline;
-    text-underline-position: under;
-  }
+const RegisterLink = styled(Link)`
+  font-weight: bold;
+  color: #2c5282;
+  margin-left: 6px;
+  text-decoration: underline;
+  text-underline-position: under;
 `;
 
 export default Login;

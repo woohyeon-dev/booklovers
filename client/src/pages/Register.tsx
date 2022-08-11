@@ -80,13 +80,11 @@ const Register = () => {
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           title="비밀번호는 하나 이상의 숫자와 대소문자를 포함해야 하고 8자 이상이어야 합니다."
         />
-        <Button value="회원가입" bgColor="#2c5282" color="white" onClick={(e) => {}} />
-        <div className="registerGroup">
+        <Btn value="회원가입" bgColor="#2c5282" color="white" onClick={(e) => {}} />
+        <LoginGroup>
           <span>이미 계정이 있으신가요?</span>
-          <Link className="linkBtn" to="/login">
-            로그인
-          </Link>
-        </div>
+          <LoginLink to="/login">로그인</LoginLink>
+        </LoginGroup>
       </RegisterBox>
     </FormContainer>
   );
@@ -94,25 +92,25 @@ const Register = () => {
 
 const RegisterBox = styled.div`
   width: 320px;
+`;
 
-  Button {
-    margin-top: 30px;
-  }
+const Btn = styled(Button)`
+  margin-top: 20px;
+`;
 
-  .registerGroup {
-    padding-top: 16px;
-    font-size: 13px;
-    height: 30px;
-    text-align: center;
-  }
+const LoginGroup = styled.div`
+  padding-top: 16px;
+  font-size: 13px;
+  height: 30px;
+  text-align: center;
+`;
 
-  .linkBtn {
-    font-weight: bold;
-    color: #2c5282;
-    margin-left: 6px;
-    text-decoration: underline;
-    text-underline-position: under;
-  }
+const LoginLink = styled(Link)`
+  font-weight: bold;
+  color: #2c5282;
+  margin-left: 6px;
+  text-decoration: underline;
+  text-underline-position: under;
 `;
 
 export default Register;

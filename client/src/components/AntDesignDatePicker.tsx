@@ -13,7 +13,7 @@ type Props = {
 const AntDesignDatePicker = ({ label, startDate, onChange }: Props) => {
   return (
     <AntDesignDatePickerBox>
-      <label className="label">{label}</label>
+      <Label className="label">{label}</Label>
       <DatePicker className="datePicker" defaultValue={moment(startDate, 'YYYY-MM-DD')} onChange={onChange} />
     </AntDesignDatePickerBox>
   );
@@ -22,17 +22,17 @@ const AntDesignDatePicker = ({ label, startDate, onChange }: Props) => {
 const AntDesignDatePickerBox = styled.div`
   padding-top: 10px;
 
-  .label {
-    display: block;
-    font-size: 15px;
-    height: 20px;
-    padding: 0 6px;
-  }
-
   .datePicker {
     height: 44px;
     border-radius: 0.5rem;
   }
+`;
+
+const Label = styled.label`
+  display: block;
+  font-size: 15px;
+  height: 20px;
+  padding: 0 6px;
 `;
 
 export default AntDesignDatePicker;

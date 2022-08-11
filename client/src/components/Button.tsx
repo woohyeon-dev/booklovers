@@ -44,6 +44,7 @@ const StyledButton = styled.button<{
   border-radius: ${(props) => props.borderRadius || 'none'};
   color: ${(props) => props.color || 'black'};
   background-color: ${(props) => props.bgColor || 'white'};
+
   &:hover {
     cursor: pointer;
     box-shadow: none;

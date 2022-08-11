@@ -42,9 +42,9 @@ const SearchForm = ({ setSearchWord, setSearchResult, setTotalCnt }) => {
 
   return (
     <SearchFormBox>
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <RadioGroup options={['제목', 'ISBN']} value={searchType} onChange={handleSearchType} />
-        <input
+        <Input
           className="searchInput"
           type="text"
           placeholder={placeholder}
@@ -53,8 +53,8 @@ const SearchForm = ({ setSearchWord, setSearchResult, setTotalCnt }) => {
           }}
           required
         />
-        <button>검색</button>
-      </form>
+        <Btn>검색</Btn>
+      </Form>
     </SearchFormBox>
   );
 };
@@ -63,37 +63,32 @@ const SearchFormBox = styled.div`
   font-size: 18px;
   background-color: #f7f8f9;
   border: 1px solid #d5d7db;
+`;
 
-  form {
-    margin: 0 auto;
-    display: flex;
-    padding: 20px;
-    width: fit-content;
-  }
+const Form = styled.form`
+  margin: 0 auto;
+  display: flex;
+  padding: 20px;
+  width: fit-content;
+`;
 
-  .radioGroup {
-    background-color: white;
-    border: 1px solid #d5d7db;
-  }
+const Input = styled.input`
+  background-color: white;
+  width: 500px;
+  height: 44px;
+  padding: 0 14px;
+  margin: 0 14px;
+  border: 1px solid #d5d7db;
+  border-radius: 0.5rem;
+`;
 
-  .searchInput {
-    background-color: white;
-    width: 500px;
-    height: 44px;
-    padding: 0 14px;
-    margin: 0 14px;
-    border: 1px solid #d5d7db;
-    border-radius: 0.5rem;
-  }
-
-  button {
-    background-color: #3e4549;
-    border-radius: 0.5rem;
-    font-size: 16px;
-    color: white;
-    height: 44px;
-    padding: 0 14px;
-  }
+const Btn = styled.button`
+  background-color: #3e4549;
+  border-radius: 0.5rem;
+  font-size: 16px;
+  color: white;
+  height: 44px;
+  padding: 0 14px;
 `;
 
 export default SearchForm;

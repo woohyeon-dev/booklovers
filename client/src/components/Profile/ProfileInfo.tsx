@@ -8,14 +8,14 @@ const ProfileInfo = ({ loggedUser, setEditable }) => {
 
   return (
     <ProfileInfoBox>
-      <div className="imageBox">
+      <ImageBox>
         {!photo && <div>none</div>}
-        {photo && <img className="img" src={`/img/profile/${photo}`} alt="" />}
-      </div>
-      <Input label="닉네임" name="nickname" type="text" value={nickname} disabled />
-      <Input label="성별" name="gender" type="text" value={gender} disabled />
-      <Input label="생년월일" name="birthday" type="text" value={birthday} disabled />
-      <Button
+        {photo && <Img src={`/img/profile/${photo}`} alt="" />}
+      </ImageBox>
+      <Input label="닉네임" name="nickname" value={nickname} disabled />
+      <Input label="성별" name="gender" value={gender} disabled />
+      <Input label="생년월일" name="birthday" value={birthday} disabled />
+      <Btn
         Icon={RiEdit2Line}
         value="프로필 수정"
         type="button"
@@ -31,31 +31,31 @@ const ProfileInfo = ({ loggedUser, setEditable }) => {
 const ProfileInfoBox = styled.div`
   display: grid;
   margin-top: 12px;
+`;
 
-  .imageBox {
-    width: 223px;
-    height: 223px;
-    margin-bottom: 10px;
-    background-color: #f7f8f9;
-    color: #88929c;
-    outline: 1px solid #d5d7db;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0.5rem;
-    overflow: hidden;
-  }
+const ImageBox = styled.div`
+  width: 223px;
+  height: 223px;
+  margin-bottom: 10px;
+  background-color: #f7f8f9;
+  color: #88929c;
+  outline: 1px solid #d5d7db;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  overflow: hidden;
+`;
 
-  .img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 0.5rem;
-  }
+const Img = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+`;
 
-  button {
-    margin-top: 20px;
-  }
+const Btn = styled(Button)`
+  margin-top: 20px;
 `;
 
 export default ProfileInfo;

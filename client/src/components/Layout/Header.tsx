@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ProfileMenu } from '@components';
 import profile from '../../assets/profile.jpeg';
 import { getUser } from '../../utils/getUser';
@@ -12,104 +12,96 @@ const Header = () => {
 
   return (
     <HeaderBox>
-      <div className="headerContainer">
-        <Link className="headerLogoBox" to="">
-          북러버스
-        </Link>
-        <div className="navbar">
-          <Link className="nav" to="/search">
-            도서검색
-          </Link>
-          <Link className="nav" to="/bookclub">
-            북클럽
-          </Link>
+      <HeaderContainer>
+        <LogoLink to="">북러버스</LogoLink>
+        <Navbar>
+          <NavLink to="/search">도서검색</NavLink>
+          <NavLink to="/bookclub">북클럽</NavLink>
           {!loggedUser && (
             <>
-              <Link className="nav" to="/login">
-                로그인
-              </Link>
-              <Link className="nav" to="/register">
-                회원가입
-              </Link>
+              <NavLink to="/login">로그인</NavLink>
+              <NavLink to="/register">회원가입</NavLink>
             </>
           )}
           {loggedUser && (
             <>
-              <div
-                className="nav profile"
+              <Profile
+                as="div"
                 onClick={() => {
                   setVisibleMenu((current: boolean) => !current);
                 }}
               >
                 <img src={profile} alt="" style={{ width: '24px', height: '24px' }} />
-                <span>{loggedUser.nickname}</span>님
+                <span>{loggedUser?.nickname}qwdwqdwqdwqd</span>님
                 <MdOutlineKeyboardArrowDown />
                 {visibleMenu && <ProfileMenu />}
-              </div>
+              </Profile>
             </>
           )}
-        </div>
-      </div>
+        </Navbar>
+      </HeaderContainer>
     </HeaderBox>
   );
 };
 
 const HeaderBox = styled.div`
+  background-color: white;
   height: 120px;
   position: sticky;
   z-index: 10;
   top: 0;
+  border-bottom: 2px solid #f7f8f9;
+`;
+
+const HeaderContainer = styled.div`
   background-color: white;
   border-bottom: 2px solid #f7f8f9;
+  width: 1080px;
+  height: 120px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
-  .headerContainer {
-    background-color: white;
-    border-bottom: 2px solid #f7f8f9;
-    width: 1080px;
-    height: 120px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+const LogoLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  font-family: 'Unreal_science_orbit';
+  font-size: 55px;
+  font-weight: bold;
+  padding: 6px;
+`;
+
+const Navbar = styled.div`
+  width: auto;
+  padding: 0;
+  display: flex;
+`;
+
+const NavLink = styled(Link)`
+  height: 26px;
+  line-height: 26px;
+  padding: 0 20px;
+  font-size: 18px;
+
+  &:last-child {
+    padding-right: 0;
+  }
+`;
+
+const Profile = styled(NavLink)`
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
   }
 
-  .headerLogoBox {
-    display: flex;
-    align-items: center;
-    font-family: 'Unreal_science_orbit';
-    font-size: 55px;
-    font-weight: bold;
-    padding: 6px;
-  }
-
-  .navbar {
-    width: auto;
-    padding: 0;
-  }
-
-  .nav {
-    height: 26px;
-    margin: 0 20px;
-    padding: 4px;
-    font-size: 18px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  .profile {
-    position: relative;
-    display: flex;
-    justify-content: flex-end;
-    font-size: 16px;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  .profile > span {
-    margin: 0 2px 0px 6px;
+  & > span {
+    margin-left: 6px;
     max-width: 76px;
     overflow: hidden;
     text-overflow: ellipsis;

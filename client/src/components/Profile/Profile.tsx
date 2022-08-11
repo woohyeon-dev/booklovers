@@ -17,19 +17,26 @@ const Profile = () => {
     }
   }, [loggedUser]);
 
+  // const loggedUser = {
+  //   photo: '',
+  //   nickname: '',
+  //   gender: '',
+  //   birthday: '',
+  // };
+
   return (
     <ProfileBox>
       {loggedUser && (
         <>
-          <div className="box">
+          <Box>
             <h1>프로필</h1>
             {!editable && <ProfileInfo loggedUser={loggedUser} setEditable={setEditable} />}
             {editable && <EditProfile loggedUser={loggedUser} setEditable={setEditable} setUpdate={setUpdate} />}
-          </div>
-          <div className="box">
+          </Box>
+          <Box>
             <h1>읽고 싶은 책</h1>
-            <div className="list"></div>
-          </div>
+            <List></List>
+          </Box>
         </>
       )}
     </ProfileBox>
@@ -41,22 +48,22 @@ const ProfileBox = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-gap: 20px;
+`;
 
-  .box {
-    height: fit-content;
-    border: 1px solid #d5d7db;
-    padding: 20px;
-    border-radius: 0.5rem;
-  }
+const Box = styled.div`
+  height: fit-content;
+  border: 1px solid #d5d7db;
+  padding: 20px;
+  border-radius: 0.5rem;
 
   h1 {
     padding-left: 4px;
     font-size: 20px;
   }
+`;
 
-  .list {
-    margin-top: 12px;
-  }
+const List = styled.div`
+  margin-top: 12px;
 `;
 
 export default Profile;

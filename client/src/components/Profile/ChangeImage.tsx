@@ -47,7 +47,7 @@ const ChangeImage = ({ selectedImage, setSelectedImage }) => {
   }, []);
 
   return (
-    <ChangeImageBox>
+    <>
       <input
         type="file"
         ref={imageInput}
@@ -56,53 +56,49 @@ const ChangeImage = ({ selectedImage, setSelectedImage }) => {
         onChange={changeImage}
         onClick={resetInputValue}
       />
-      <div className="imageBox" onClick={imageUpload}>
-        <>
-          {!selectedImage.preview_URL && <img src={add} alt="" />}
-          {selectedImage.preview_URL && <img className="img" src={selectedImage.preview_URL} alt="" />}
-        </>
-        <button className="deleteBtn" type="button" onClick={cancelUpload}>
+      <ImageBox onClick={imageUpload}>
+        {!selectedImage.preview_URL && <img src={add} alt="" />}
+        {selectedImage.preview_URL && <Img src={selectedImage.preview_URL} alt="" />}
+        <DeleteBtn type="button" onClick={cancelUpload}>
           -
-        </button>
-      </div>
-    </ChangeImageBox>
+        </DeleteBtn>
+      </ImageBox>
+    </>
   );
 };
 
-const ChangeImageBox = styled.div`
-  .imageBox {
-    width: 223px;
-    height: 223px;
-    margin-bottom: 10px;
-    outline: 1px solid #d5d7db;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    position: relative;
-  }
+const ImageBox = styled.div`
+  width: 223px;
+  height: 223px;
+  margin-bottom: 10px;
+  outline: 1px solid #d5d7db;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  position: relative;
+`;
 
-  .img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 0.5rem;
-  }
+const Img = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+`;
 
-  .deleteBtn {
-    padding: 1px 6px 2px 6px;
-    font-size: 20px;
-    border-radius: 0.5rem;
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    z-index: 1;
-    background-color: #ecedef;
-    color: #db5f6c;
-    font-weight: bold;
-  }
+const DeleteBtn = styled.button`
+  padding: 1px 6px 2px 6px;
+  font-size: 20px;
+  border-radius: 0.5rem;
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 1;
+  background-color: #ecedef;
+  color: #db5f6c;
+  font-weight: bold;
 `;
 
 export default ChangeImage;

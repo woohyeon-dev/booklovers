@@ -13,7 +13,7 @@ type props = {
 const RadioGroup = ({ options, label, value, onChange }: props) => {
   return (
     <RadioGroupBox>
-      <label className="label">{label}</label>
+      <Label>{label}</Label>
       <Radio.Group className="radioGroup" onChange={onChange} value={value}>
         {options.length > 0 &&
           options.map((opt, index) => (
@@ -27,13 +27,6 @@ const RadioGroup = ({ options, label, value, onChange }: props) => {
 };
 
 const RadioGroupBox = styled.div`
-  .label {
-    display: block;
-    font-size: 15px;
-    line-height: 20px;
-    padding: 0 6px;
-  }
-
   .radioGroup {
     width: fit-content;
     height: 44px;
@@ -41,7 +34,16 @@ const RadioGroupBox = styled.div`
     padding-left: 11px;
     display: flex;
     align-items: center;
+    background-color: white;
+    border: 1px solid #d5d7db;
   }
+`;
+
+const Label = styled.label`
+  display: block;
+  font-size: 15px;
+  line-height: 20px;
+  padding: 0 6px;
 `;
 
 export default RadioGroup;

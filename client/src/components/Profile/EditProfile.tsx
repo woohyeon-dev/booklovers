@@ -57,16 +57,16 @@ const EditProfile = ({ loggedUser, setEditable, setUpdate }) => {
           onChange={handleNicknameInput}
           required
         />
-        <div className="radioGroupWrapper">
+        <RadioGroupWrapper>
           <RadioGroup label="성별" options={['남성', '여성']} value={gender} onChange={handleGenderInput} />
-        </div>
+        </RadioGroupWrapper>
         <AntDesignDatePicker label="생년월일" startDate={birthday} onChange={handleBirthday} />
-        <div className="btnGroup">
-          <button className="profileBtn cancelBtn" type="button" onClick={() => setEditable(false)}>
+        <BtnGroup>
+          <CancelBtn type="button" onClick={() => setEditable(false)}>
             취소
-          </button>
-          <button className="profileBtn saveBtn">확이</button>
-        </div>
+          </CancelBtn>
+          <SaveBtn>저장</SaveBtn>
+        </BtnGroup>
       </form>
     </EditProfileBox>
   );
@@ -75,49 +75,33 @@ const EditProfile = ({ loggedUser, setEditable, setUpdate }) => {
 const EditProfileBox = styled.div`
   display: grid;
   margin-top: 12px;
+`;
 
-  .userImg {
-    width: 223px;
-    height: 223px;
-    margin-bottom: 10px;
-    outline: 1px solid #d5d7db;
-    border-radius: 0.5rem;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 0.5rem;
-  }
+const RadioGroupWrapper = styled.div`
+  padding-top: 10px;
+`;
 
-  .radioGroupWrapper {
-    padding-top: 10px;
-  }
+const BtnGroup = styled.div`
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 14px;
+`;
 
-  .radioGroup {
-    border: 1px solid #d5d7db;
-  }
+const Btn = styled.button`
+  height: 44px;
+  border-radius: 0.5rem;
+`;
 
-  .btnGroup {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 14px;
-  }
+const SaveBtn = styled(Btn)`
+  background-color: #3e4549;
+  color: #ffffff;
+`;
 
-  .profileBtn {
-    height: 44px;
-    border-radius: 0.5rem;
-  }
-
-  .saveBtn {
-    background-color: #3e4549;
-    color: #ffffff;
-  }
-
-  .cancelBtn {
-    border: 1px solid #d5d7db;
-    background-color: #f7f8f9;
-    color: #88929c;
-  }
+const CancelBtn = styled(Btn)`
+  border: 1px solid #d5d7db;
+  background-color: #f7f8f9;
+  color: #88929c;
 `;
 
 export default EditProfile;
