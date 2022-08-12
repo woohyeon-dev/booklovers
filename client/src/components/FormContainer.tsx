@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import styled from 'styled-components';
 import BackgroundImage from '../assets/book.jpeg';
 import favicon from '../assets/favicon.ico';
 import { Link, useLocation } from 'react-router-dom';
 
-function FormContainer({ onSubmit, children }) {
+interface FormContainerProps {
+  onSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
+  children: JSX.Element | JSX.Element[];
+}
+
+function FormContainer({ onSubmit, children }: FormContainerProps) {
   const pathname = useLocation().pathname.replace('/', '');
   return (
     <FormContainerBox>

@@ -20,9 +20,9 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post('/auth/login', inputValue);
-      axios.defaults.headers.common['Authorization'] = res.data.accessToken ? `Bearer ${res.data.accessToken}` : null;
+      axios.defaults.headers.common['Authorization'] = res.data.accessToken ? `Bearer ${res.data.accessToken}` : '';
       navigate('/', { replace: true });
-    } catch (err) {
+    } catch (err: any) {
       alert(err.response.data.msg);
     }
   };

@@ -3,14 +3,14 @@ import 'antd/dist/antd.css';
 import { Radio, RadioChangeEvent } from 'antd';
 import styled from 'styled-components';
 
-type props = {
+interface RadioGrpupProps {
   options: Array<string>;
   label?: string;
   value: string;
   onChange: (e: RadioChangeEvent) => void;
-};
+}
 
-const RadioGroup = ({ options, label, value, onChange }: props) => {
+const RadioGroup = ({ options, label, value, onChange }: RadioGrpupProps) => {
   return (
     <RadioGroupBox>
       <Label>{label}</Label>

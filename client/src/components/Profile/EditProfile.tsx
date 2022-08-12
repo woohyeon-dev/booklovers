@@ -1,17 +1,22 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import { Input, AntDesignDatePicker, RadioGroup, ChangeImage } from '@components';
 import axios from 'axios';
 import { RadioChangeEvent } from 'antd';
+import { Image, ProfileProps } from '../../types/profile';
 
-const EditProfile = ({ loggedUser, setEditable, setUpdate }) => {
-  const photoUrl = loggedUser.photo ? `/img/profile/${loggedUser.photo}` : '';
-  const [selectedImage, setSelectedImage] = useState({
+interface EditProfileProps extends ProfileProps {
+  setUpdate: Dispatch<SetStateAction<boolean>>;
+}
+
+const EditProfile = ({ loggedUser, setEditable, setUpdate }: EditProfileProps) => {
+  const photoUrl = loggedUser?.photo ? `/img/profile/${loggedUser.photo}` : '';
+  const [selectedImage, setSelectedImage] = useState<Image>({
     image_file: '', // 서버에 보낼 실제 이미지 파일
     preview_URL: photoUrl, // 클라이언트에게 미리 보여줄 이미지의 경로
   });
-  const [nickname, setNickname] = useState(loggedUser.nickname);
-  const [gender, setGender] = useState(loggedUser.gender);
+  const [nickname, setNickname] = useState<string | undefined>(loggedUser?.nickname);
+  const [gender, setGender] = useState<string | undefined>(loggedUser?.gender);
   const [birthday, setBirthday] = useState<Date>(new Date());
 
   const handleNicknameInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -22,8 +27,8 @@ const EditProfile = ({ loggedUser, setEditable, setUpdate }) => {
     setGender(e.target.value);
   };
 
-  const handleBirthday = (dateObj: moment.Moment, dateStr: string): void => {
-    setBirthday(dateObj['_d']);
+  const handleBirthday = (dateObj: moment.Moment | null, dateStr: string): void => {
+    setBirthday((dateObj as any)['_d']);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -32,9 +37,9 @@ const EditProfile = ({ loggedUser, setEditable, setUpdate }) => {
       const formData = new FormData();
       formData.append('photo', selectedImage.image_file);
       formData.append('isCurrentImg', selectedImage.preview_URL);
-      formData.append('email', loggedUser.email);
-      formData.append('nickname', nickname);
-      formData.append('gender', gender);
+      formData.append('email', loggedUser?.email || '');
+      formData.append('nickname', nickname!);
+      formData.append('gender', gender || '');
       formData.append('birthday', birthday.toString());
       const res = await axios.put('/auth/profile', formData);
       setUpdate((current: boolean) => !current);
@@ -53,12 +58,12 @@ const EditProfile = ({ loggedUser, setEditable, setUpdate }) => {
           placeholder="사용하실 닉네임을 입력해주세요"
           name="nickname"
           type="text"
-          value={nickname}
+          value={nickname!}
           onChange={handleNicknameInput}
           required
         />
         <RadioGroupWrapper>
-          <RadioGroup label="성별" options={['남성', '여성']} value={gender} onChange={handleGenderInput} />
+          <RadioGroup label="성별" options={['남성', '여성']} value={gender || ''} onChange={handleGenderInput} />
         </RadioGroupWrapper>
         <AntDesignDatePicker label="생년월일" startDate={birthday} onChange={handleBirthday} />
         <BtnGroup>

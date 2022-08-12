@@ -1,9 +1,9 @@
-import React, { ChangeEvent, MouseEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 import { IconType } from 'react-icons/lib';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
-type props = {
+interface InputProps {
   Icon?: IconType;
   iconWidth?: number;
   label?: string;
@@ -16,12 +16,12 @@ type props = {
   title?: string;
   disabled?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
-const Input = ({ label, Icon, iconWidth = 20, type = 'text', ...rest }: props) => {
+const Input = ({ label, Icon, iconWidth = 20, type = 'text', ...rest }: InputProps) => {
   const [inputType, setInputType] = useState(type);
   const [visible, setVisible] = useState(false);
-  const toggleIcon = (e: MouseEvent<SVGElement>) => {
+  const toggleIcon = () => {
     setVisible((current) => {
       if (!current) {
         setInputType('text');

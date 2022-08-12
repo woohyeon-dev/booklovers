@@ -1,10 +1,17 @@
 import axios from 'axios';
 import { RadioGroup } from '@components';
-import React, { FormEvent, useState } from 'react';
+import React, { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import { RadioChangeEvent } from 'antd';
+import { SearchResultType } from '../../types/search';
 
-const SearchForm = ({ setSearchWord, setSearchResult, setTotalCnt }) => {
+interface SearchFormProps {
+  setSearchWord: Dispatch<SetStateAction<string>>;
+  setSearchResult: Dispatch<SetStateAction<Array<SearchResultType>>>;
+  setTotalCnt: Dispatch<SetStateAction<number>>;
+}
+
+const SearchForm = ({ setSearchWord, setSearchResult, setTotalCnt }: SearchFormProps) => {
   const [word, setWord] = useState('');
   const [searchType, setSearchType] = useState('제목');
   const [placeholder, setPlaceholder] = useState('제목을 입력하세요');

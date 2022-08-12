@@ -17,10 +17,10 @@ const Header = () => {
       <HeaderContainer>
         <LogoLink to="">북러버스</LogoLink>
         <Navbar>
-          <Nav to="/search" style={{ color: searchMatch && '#3c40c6' }}>
+          <Nav to="/search" style={{ color: searchMatch ? '#3c40c6' : '' }}>
             도서검색
           </Nav>
-          <Nav to="/bookclub" style={{ color: bookclubMatch && '#3c40c6' }}>
+          <Nav to="/bookclub" style={{ color: bookclubMatch ? '#3c40c6' : '' }}>
             북클럽
           </Nav>
           {!loggedUser && (

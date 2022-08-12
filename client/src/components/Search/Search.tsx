@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { SearchResultType } from '../../types/search';
 import SearchForm from './SearchForm';
 import SearchResult from './SearchResult';
 
 const Search = () => {
   const [searchWord, setSearchWord] = useState('');
   const [totalCnt, setTotalCnt] = useState(0);
-  const [searchResult, setSearchResult] = useState([]);
+  const [searchResult, setSearchResult] = useState<Array<SearchResultType>>([]);
 
   // [
   //   {

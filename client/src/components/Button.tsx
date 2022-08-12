@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 type ColorType = string;
 
-type props = {
+interface ButtonProps {
   Icon?: IconType;
   iconColor?: ColorType;
   value: string;
@@ -15,9 +15,9 @@ type props = {
   bgColor?: ColorType;
   type?: 'button' | 'submit' | 'reset';
   onClick: (e: MouseEvent<HTMLButtonElement>) => void;
-};
+}
 
-const Button = (props: props) => {
+const Button = (props: ButtonProps) => {
   const { Icon, iconColor, value, ...rest } = props;
   return (
     <StyledButton {...rest}>

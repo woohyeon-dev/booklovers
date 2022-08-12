@@ -2,9 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { Input, Button } from '@components';
 import { RiEdit2Line } from 'react-icons/ri';
+import { ProfileProps } from '../../types/profile';
 
-const ProfileInfo = ({ loggedUser, setEditable }) => {
-  const { photo, nickname, gender, birthday } = loggedUser;
+interface ProfileInfoProps extends ProfileProps {}
+
+const ProfileInfo = ({ loggedUser, setEditable }: ProfileInfoProps) => {
+  const { photo, nickname, gender, birthday } = loggedUser!;
 
   return (
     <ProfileInfoBox>
@@ -13,8 +16,8 @@ const ProfileInfo = ({ loggedUser, setEditable }) => {
         {photo && <Img src={`/img/profile/${photo}`} alt="" />}
       </ImageBox>
       <Input label="닉네임" name="nickname" value={nickname} disabled />
-      <Input label="성별" name="gender" value={gender} disabled />
-      <Input label="생년월일" name="birthday" value={birthday} disabled />
+      <Input label="성별" name="gender" value={gender || ''} disabled />
+      <Input label="생년월일" name="birthday" value={birthday || ''} disabled />
       <Btn
         Icon={RiEdit2Line}
         value="프로필 수정"

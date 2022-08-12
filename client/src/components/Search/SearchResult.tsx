@@ -1,20 +1,13 @@
 import { Descriptions } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
+import { SearchResultType } from '../../types/search';
 
-type SearchResultType = {
-  title?: string;
-  link?: string;
-  image?: string;
-  author?: string;
-  discount?: string | number;
-  publisher?: string;
-  pubdate?: string | number | Date;
-  isbn?: string | number;
-  description?: string;
-};
+interface SearchResultProps {
+  searchResults: Array<SearchResultType>;
+}
 
-const SearchResult = ({ searchResults }) => {
+const SearchResult = ({ searchResults }: SearchResultProps) => {
   return (
     <SearchResultBox>
       {searchResults.length > 0 &&

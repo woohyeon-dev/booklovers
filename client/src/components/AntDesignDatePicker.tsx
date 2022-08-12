@@ -4,13 +4,13 @@ import { DatePicker } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 
-type Props = {
+interface AntDesignDatePickerProps {
   label?: string;
   startDate: Date;
-  onChange: (dateObj: moment.Moment, dateStr: string) => void;
-};
+  onChange: (dateObj: moment.Moment | null, dateStr: string) => void;
+}
 
-const AntDesignDatePicker = ({ label, startDate, onChange }: Props) => {
+const AntDesignDatePicker = ({ label, startDate, onChange }: AntDesignDatePickerProps) => {
   return (
     <AntDesignDatePickerBox>
       <Label className="label">{label}</Label>

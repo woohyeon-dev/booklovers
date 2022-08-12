@@ -1,9 +1,16 @@
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
+import { User } from '../types/profile';
 import { refreshToken } from './refreshToken';
 
-export const getUser = (update: boolean = false) => {
-  const [loggedUser, setLoggedUser] = useState({ email: '', nickname: '', gender: '', birthday: '', photo: '' });
+export const getUser = (update: boolean = false): User | undefined => {
+  const [loggedUser, setLoggedUser] = useState<User | undefined>({
+    email: '',
+    nickname: '',
+    gender: '',
+    birthday: '',
+    photo: '',
+  });
 
   useEffect(() => {
     setUser();
@@ -13,7 +20,7 @@ export const getUser = (update: boolean = false) => {
     try {
       const user = await axios.get('/auth/user');
       setLoggedUser(user.data);
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.data.code === 2) {
         // Access token does not exist
         // Aceess token 재발급해야 함

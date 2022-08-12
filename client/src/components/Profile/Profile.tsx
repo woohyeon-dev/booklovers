@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { ProfileInfo, EditProfile } from '@components';
 import { getUser } from '../../utils/getUser';
 import { useNavigate } from 'react-router-dom';
+import { User } from '../../types/profile';
 
 const Profile = () => {
-  const [editable, setEditable] = useState(false);
-  const [update, setUpdate] = useState(false);
+  const [editable, setEditable] = useState<boolean>(false);
+  const [update, setUpdate] = useState<boolean>(false);
   // const loggedUser = getUser(update);
   const navigate = useNavigate();
 
@@ -17,11 +18,12 @@ const Profile = () => {
   //   }
   // }, [loggedUser]);
 
-  const loggedUser = {
+  const loggedUser: User = {
     photo: '',
     nickname: '',
     gender: '',
     birthday: '',
+    email: '',
   };
 
   return (

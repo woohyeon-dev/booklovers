@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 
 axios.defaults.baseURL = '';
-axios.defaults.headers['Content-type'] = 'application/json; charset=UTF-8';
+(axios.defaults.headers as any)['Content-type'] = 'application/json; charset=UTF-8';
 
 const useAxios = (url: string, method: Method | string, data?: any) => {
   const [response, setResponse] = useState<AxiosResponse>();
@@ -26,7 +26,7 @@ const useAxios = (url: string, method: Method | string, data?: any) => {
       if (result.data.msg) {
         console.log(result.data.msg);
       }
-    } catch (err) {
+    } catch (err: any) {
       setError(err);
       throw err;
     } finally {
@@ -37,7 +37,7 @@ const useAxios = (url: string, method: Method | string, data?: any) => {
   const sendData = async () => {
     try {
       await fetchData(url, method, data);
-    } catch (err) {
+    } catch (err: any) {
       console.error(error);
       alert(err.response.data.msg);
     }
