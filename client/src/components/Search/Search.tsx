@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SearchResultType } from '../../types/search';
-import SearchForm from './SearchForm';
-import SearchResult from './SearchResult';
+import { SearchForm, SearchResult, Pagination } from '@components';
 
 const Search = () => {
   const [searchWord, setSearchWord] = useState('');
   const [totalCnt, setTotalCnt] = useState(0);
   const [searchResult, setSearchResult] = useState<Array<SearchResultType>>([]);
+  const [start, setStart] = useState(1);
 
   // [
   //   {
@@ -133,7 +133,13 @@ const Search = () => {
 
   return (
     <SearchBox>
-      <SearchForm setSearchWord={setSearchWord} setSearchResult={setSearchResult} setTotalCnt={setTotalCnt} />
+      <SearchForm
+        start={start}
+        searchWord={searchWord}
+        setSearchWord={setSearchWord}
+        setSearchResult={setSearchResult}
+        setTotalCnt={setTotalCnt}
+      />
       <SearchInfo>
         <div>
           검색어: <span>{searchWord}</span>
@@ -143,6 +149,7 @@ const Search = () => {
         </div>
       </SearchInfo>
       <SearchResult searchResults={searchResult} />
+      <Pagination totalCnt={totalCnt} setStart={setStart} />
     </SearchBox>
   );
 };

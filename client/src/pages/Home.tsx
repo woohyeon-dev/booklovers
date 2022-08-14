@@ -11,7 +11,7 @@ const Home = () => {
         <Routes>
           <Route path="" element={<Main />} />
           <Route path="bookclub" element={<BookClub />} />
-          <Route path="search" element={<Search />} />
+          <Route path="search/*" element={<Search />} />
           <Route path="profile" element={<Profile />} />
           <Route path="*" element={<Navigate replace to="/error" />} />
         </Routes>

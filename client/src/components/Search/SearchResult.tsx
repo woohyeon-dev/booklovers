@@ -1,4 +1,3 @@
-import { Descriptions } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 import { SearchResultType } from '../../types/search';
@@ -31,6 +30,7 @@ const SearchResultBox = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
+  margin-bottom: 20px;
 `;
 
 const Wrapper = styled.div`

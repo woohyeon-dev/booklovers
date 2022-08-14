@@ -1,21 +1,36 @@
 import axios from 'axios';
 import { RadioGroup } from '@components';
-import React, { Dispatch, FormEvent, SetStateAction, useState } from 'react';
+import React, { Dispatch, FormEvent, SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { RadioChangeEvent } from 'antd';
 import { SearchResultType } from '../../types/search';
-
 interface SearchFormProps {
+  start: number;
+  searchWord: string;
   setSearchWord: Dispatch<SetStateAction<string>>;
   setSearchResult: Dispatch<SetStateAction<Array<SearchResultType>>>;
   setTotalCnt: Dispatch<SetStateAction<number>>;
 }
 
-const SearchForm = ({ setSearchWord, setSearchResult, setTotalCnt }: SearchFormProps) => {
+const SearchForm = ({ start, searchWord, setSearchWord, setSearchResult, setTotalCnt }: SearchFormProps) => {
   const [word, setWord] = useState('');
   const [searchType, setSearchType] = useState('제목');
   const [placeholder, setPlaceholder] = useState('제목을 입력하세요');
   const [requestQuery, setRequestQuery] = useState('d_titl');
+
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get('/api/v1/search/book_adv', {
+        params: { [requestQuery]: searchWord, start },
+        headers: {
+          'X-Naver-Client-Id': process.env.NAVER_CLIENT_ID!,
+          'X-Naver-Client-Secret': process.env.NAVER_CLIENT_SECRET!,
+        },
+      });
+      console.log(res.data);
+      setSearchResult(res.data.items);
+    })();
+  }, [start]);
 
   const handleSearchType = (e: RadioChangeEvent) => {
     const { value } = e.target;
@@ -32,13 +47,14 @@ const SearchForm = ({ setSearchWord, setSearchResult, setTotalCnt }: SearchFormP
     e.preventDefault();
     try {
       const res = await axios.get('/api/v1/search/book_adv', {
-        params: { [requestQuery]: word },
+        params: { [requestQuery]: word, start },
         headers: {
           'X-Naver-Client-Id': process.env.NAVER_CLIENT_ID!,
           'X-Naver-Client-Secret': process.env.NAVER_CLIENT_SECRET!,
         },
       });
       console.log(res.data);
+      setWord('');
       setSearchResult(res.data.items);
       setTotalCnt(res.data.total);
       setSearchWord(word);

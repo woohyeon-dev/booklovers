@@ -2,6 +2,7 @@ import BookClub from './BookClub/BookClub';
 import Search from './Search/Search';
 import SearchForm from './Search/SearchForm';
 import SearchResult from './Search/SearchResult';
+import Pagination from './Pagination';
 import Footer from './Layout/Footer';
 import Header from './Layout/Header';
 import Main from './Main/Main';
@@ -21,6 +22,7 @@ export {
   Search,
   SearchForm,
   SearchResult,
+  Pagination,
   Footer,
   Header,
   Main,
