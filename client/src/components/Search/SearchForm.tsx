@@ -10,9 +10,10 @@ interface SearchFormProps {
   setSearchWord: Dispatch<SetStateAction<string>>;
   setSearchResult: Dispatch<SetStateAction<Array<SearchResultType>>>;
   setTotalCnt: Dispatch<SetStateAction<number>>;
+  setStart: Dispatch<SetStateAction<number>>;
 }
 
-const SearchForm = ({ start, searchWord, setSearchWord, setSearchResult, setTotalCnt }: SearchFormProps) => {
+const SearchForm = ({ start, searchWord, setStart, setSearchWord, setSearchResult, setTotalCnt }: SearchFormProps) => {
   const [word, setWord] = useState('');
   const [searchType, setSearchType] = useState('제목');
   const [placeholder, setPlaceholder] = useState('제목을 입력하세요');
@@ -47,14 +48,14 @@ const SearchForm = ({ start, searchWord, setSearchWord, setSearchResult, setTota
     e.preventDefault();
     try {
       const res = await axios.get('/api/v1/search/book_adv', {
-        params: { [requestQuery]: word, start },
+        params: { [requestQuery]: word, start: 1 },
         headers: {
           'X-Naver-Client-Id': process.env.NAVER_CLIENT_ID!,
           'X-Naver-Client-Secret': process.env.NAVER_CLIENT_SECRET!,
         },
       });
-      console.log(res.data);
       setWord('');
+      setStart(1);
       setSearchResult(res.data.items);
       setTotalCnt(res.data.total);
       setSearchWord(word);

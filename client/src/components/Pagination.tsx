@@ -3,11 +3,12 @@ import styled from 'styled-components';
 
 interface PaginationProps {
   totalCnt: number;
+  currentPage: number;
   setStart: Dispatch<React.SetStateAction<number>>;
+  setCurrentPage: Dispatch<React.SetStateAction<number>>;
 }
 
-const Pagination = ({ totalCnt, setStart }: PaginationProps) => {
-  const [currentPage, setCurrentPage] = useState(1);
+const Pagination = ({ totalCnt, currentPage, setStart, setCurrentPage }: PaginationProps) => {
   const [currentGroup, setCurrentGroup] = useState(0);
 
   const PAGE_PER = 10;
@@ -26,15 +27,13 @@ const Pagination = ({ totalCnt, setStart }: PaginationProps) => {
     pageGroups.push(pages.slice(i, i + PAGE_GROUP_SIZE));
   }
 
-  useEffect(() => {
-    setCurrentGroup(Math.floor((currentPage - 1) / PAGE_GROUP_SIZE));
-  }, [currentPage]);
-
   return (
     <PaginationBox>
       <Btn
         onClick={() => {
           if (currentGroup !== 0) {
+            setStart((currentGroup - 1) * PAGE_PER ** 2 + 1);
+            setCurrentPage((currentGroup - 1) * PAGE_PER + 1);
             setCurrentGroup(currentGroup - 1);
           }
         }}
@@ -49,6 +48,7 @@ const Pagination = ({ totalCnt, setStart }: PaginationProps) => {
               setCurrentPage(num);
               setStart((num - 1) * PAGE_PER + 1);
             }}
+            style={{ backgroundColor: num === currentPage ? '#d5d7db' : '' }}
           >
             {num}
           </Btn>
@@ -56,6 +56,8 @@ const Pagination = ({ totalCnt, setStart }: PaginationProps) => {
       <Btn
         onClick={() => {
           if (currentGroup !== pageGroups.length - 1) {
+            setStart((currentGroup + 1) * PAGE_PER ** 2 + 1);
+            setCurrentPage((currentGroup + 1) * PAGE_PER + 1);
             setCurrentGroup(currentGroup + 1);
           }
         }}

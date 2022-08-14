@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SearchResultType } from '../../types/search';
-import { SearchForm, SearchResult, Pagination } from '@components';
+import { SearchForm, SearchInfo, SearchResult, Pagination } from '@components';
 
 const Search = () => {
   const [searchWord, setSearchWord] = useState('');
   const [totalCnt, setTotalCnt] = useState(0);
   const [searchResult, setSearchResult] = useState<Array<SearchResultType>>([]);
   const [start, setStart] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   // [
   //   {
@@ -136,41 +137,20 @@ const Search = () => {
       <SearchForm
         start={start}
         searchWord={searchWord}
+        setStart={setStart}
         setSearchWord={setSearchWord}
         setSearchResult={setSearchResult}
         setTotalCnt={setTotalCnt}
       />
-      <SearchInfo>
-        <div>
-          검색어: <span>{searchWord}</span>
-        </div>
-        <div>
-          <span>{totalCnt}</span>개의 검색결과 중 <span>{1}</span>페이지
-        </div>
-      </SearchInfo>
+      <SearchInfo searchWord={searchWord} totalCnt={totalCnt} currentPage={currentPage} />
       <SearchResult searchResults={searchResult} />
-      <Pagination totalCnt={totalCnt} setStart={setStart} />
+      <Pagination currentPage={currentPage} totalCnt={totalCnt} setCurrentPage={setCurrentPage} setStart={setStart} />
     </SearchBox>
   );
 };
 
 const SearchBox = styled.div`
   margin: 40px 0;
-`;
-
-const SearchInfo = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 20px;
-  padding: 20px;
-  margin: 20px 0;
-  border-bottom: 2px solid black;
-  color: #3e4549;
-
-  span {
-    color: black;
-    font-weight: bold;
-  }
 `;
 
 export default Search;
