@@ -58,7 +58,7 @@ app.listen(app.get('port'), async () => {
 
   // sequelize db 연결
   try {
-    await db.sequelize.sync({ force: false });
+    await db.sequelize.sync({ force: true });
     console.log('database connect');
   } catch (error) {
     console.error(error);

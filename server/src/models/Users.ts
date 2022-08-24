@@ -1,7 +1,6 @@
-import { Model, DataTypes, CreationOptional } from 'sequelize';
-import db from './index';
+import { DataTypes, CreationOptional, Model } from 'sequelize';
 
-interface UserAttributes {
+interface UsersAttributes {
   idx?: number;
   email: string;
   password: string;
@@ -12,8 +11,8 @@ interface UserAttributes {
   refresh_token?: string;
 }
 
-class Users extends Model<UserAttributes> {
-  public idx!: number;
+export default class Users extends Model<UsersAttributes> {
+  public readonly idx!: number;
   public email!: string;
   public password!: string;
   public photo?: string;
@@ -27,59 +26,65 @@ class Users extends Model<UserAttributes> {
   declare readonly createdAt: CreationOptional<Date>;
   // updatedAt can be undefined during creation
   declare readonly deletedAt: CreationOptional<Date>;
-}
 
-Users.init(
-  {
-    idx: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    email: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-      primaryKey: true,
-      validate: {
-        notNull: true,
-        isEmail: true,
+  static initialize(sequelize: any) {
+    return this.init(
+      {
+        idx: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          primaryKey: true,
+          autoIncrement: true,
+        },
+        email: {
+          type: DataTypes.STRING(50),
+          allowNull: false,
+          validate: {
+            notNull: true,
+            isEmail: true,
+          },
+        },
+        password: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
+        },
+        photo: {
+          type: DataTypes.STRING(50),
+          allowNull: true,
+        },
+        nickname: {
+          type: DataTypes.STRING(50),
+          allowNull: false,
+        },
+        birthday: {
+          type: DataTypes.DATEONLY, // DATE without time.
+          allowNull: true,
+        },
+        gender: {
+          type: DataTypes.STRING(10),
+          allowNull: true,
+        },
+        refresh_token: {
+          type: DataTypes.TEXT,
+          allowNull: true,
+        },
       },
-    },
-    password: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    photo: {
-      type: DataTypes.STRING(50),
-      allowNull: true,
-    },
-    nickname: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-    },
-    birthday: {
-      type: DataTypes.DATEONLY, // DATE without time.
-      allowNull: true,
-    },
-    gender: {
-      type: DataTypes.STRING(10),
-      allowNull: true,
-    },
-    refresh_token: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-  },
-  {
-    sequelize: db.sequelize, // passing the `sequelize` instance is required
-    modelName: 'users',
-    tableName: 'Users',
-    timestamps: true, // createAt & updateAt 활성화
-    paranoid: true, // timestamps 가 활성화 되어야 사용 가능 > deleteAt 옵션 on
-    updatedAt: false,
-    freezeTableName: true,
+      {
+        sequelize, // passing the `sequelize` instance is required
+        modelName: 'users',
+        tableName: 'Users',
+        timestamps: true, // createAt & updateAt 활성화
+        paranoid: true, // timestamps 가 활성화 되어야 사용 가능 > deleteAt 옵션 on
+        updatedAt: false,
+        freezeTableName: true,
+      }
+    );
   }
-);
 
-export default Users;
+  static associate(db: any) {
+    this.hasMany(db.BookLikes, {
+      sourceKey: 'idx',
+      foreignKey: 'userId',
+    });
+  }
+}

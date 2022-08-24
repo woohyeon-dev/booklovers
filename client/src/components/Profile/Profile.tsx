@@ -3,28 +3,28 @@ import styled from 'styled-components';
 import { ProfileInfo, EditProfile } from '@components';
 import { getUser } from '../../utils/getUser';
 import { useNavigate } from 'react-router-dom';
-import { User } from '../../types/profile';
 
 const Profile = () => {
   const [editable, setEditable] = useState<boolean>(false);
   const [update, setUpdate] = useState<boolean>(false);
-  // const loggedUser = getUser(update);
+  const loggedUser = getUser(update);
+  console.log(loggedUser);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!loggedUser) {
-  //     alert('Available after login');
-  //     navigate('/login');
-  //   }
-  // }, [loggedUser]);
+  useEffect(() => {
+    if (!loggedUser) {
+      alert('Available after login');
+      navigate('/login');
+    }
+  }, [loggedUser]);
 
-  const loggedUser: User = {
-    photo: '',
-    nickname: '',
-    gender: '',
-    birthday: '',
-    email: '',
-  };
+  // const loggedUser: User = {
+  //   photo: '',
+  //   nickname: '',
+  //   gender: '',
+  //   birthday: '',
+  //   email: '',
+  // };
 
   return (
     <ProfileBox>

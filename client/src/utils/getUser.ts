@@ -13,34 +13,32 @@ export const getUser = (update: boolean = false): User | undefined => {
   });
 
   useEffect(() => {
-    setUser();
-  }, [update]);
-
-  const setUser = async () => {
-    try {
-      const user = await axios.get('/auth/user');
-      setLoggedUser(user.data);
-    } catch (err: any) {
-      if (err.response.data.code === 2) {
-        // Access token does not exist
-        // Aceess token 재발급해야 함
-        const result = await refreshToken();
-        // Access token 재발급후 다시 요청
-        if (result !== 'guest') {
-          try {
-            const user = await axios.get('/auth/user');
-            setLoggedUser(user.data);
-            return;
-          } catch (err) {
-            console.error(err);
+    (async () => {
+      try {
+        const user = await axios.get('/auth/user');
+        setLoggedUser(user.data);
+      } catch (err: any) {
+        if (err.response.data.code === 2) {
+          // Access token does not exist
+          // Aceess token 재발급해야 함
+          const result = await refreshToken();
+          // Access token 재발급후 다시 요청
+          if (result !== 'guest') {
+            try {
+              const user = await axios.get('/auth/user');
+              setLoggedUser(user.data);
+              return;
+            } catch (err: any) {
+              console.error(err);
+            }
           }
+        } else {
+          console.error(err);
         }
-      } else {
-        console.error(err);
+        setLoggedUser(undefined);
       }
-      setLoggedUser(undefined);
-    }
-  };
+    })();
+  }, [update]);
 
   const getInfo = useCallback(() => {
     return loggedUser;

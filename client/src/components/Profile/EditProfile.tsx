@@ -41,7 +41,7 @@ const EditProfile = ({ loggedUser, setEditable, setUpdate }: EditProfileProps) =
       formData.append('nickname', nickname!);
       formData.append('gender', gender || '');
       formData.append('birthday', birthday.toString());
-      const res = await axios.put('/auth/profile', formData);
+      await axios.put('/auth/profile', formData);
       setUpdate((current: boolean) => !current);
       setEditable(false);
     } catch (err) {
