@@ -173,7 +173,7 @@ router.get('/token', async (req, res, next) => {
 
 router.get('/user', verifyToken, async (req, res, next) => {
   const user = await Users.findOne({
-    attributes: ['email', 'nickname', 'gender', 'birthday', 'photo'],
+    attributes: ['idx', 'email', 'nickname', 'gender', 'birthday', 'photo'],
     // @ts-ignore
     where: { email: req.user.email },
   });

@@ -4,16 +4,26 @@ import React, { Dispatch, FormEvent, SetStateAction, useEffect, useState } from 
 import styled from 'styled-components';
 import { RadioChangeEvent } from 'antd';
 import { SearchResultType } from '../../types/search';
+import { User } from '../../types/profile';
 interface SearchFormProps {
   start: number;
   searchWord: string;
+  loggedUser: User | undefined;
   setSearchWord: Dispatch<SetStateAction<string>>;
   setSearchResult: Dispatch<SetStateAction<Array<SearchResultType>>>;
   setTotalCnt: Dispatch<SetStateAction<number>>;
   setStart: Dispatch<SetStateAction<number>>;
 }
 
-const SearchForm = ({ start, searchWord, setStart, setSearchWord, setSearchResult, setTotalCnt }: SearchFormProps) => {
+const SearchForm = ({
+  start,
+  searchWord,
+  loggedUser,
+  setStart,
+  setSearchWord,
+  setSearchResult,
+  setTotalCnt,
+}: SearchFormProps) => {
   const [word, setWord] = useState('');
   const [searchType, setSearchType] = useState('제목');
   const [placeholder, setPlaceholder] = useState('제목을 입력하세요');
@@ -21,15 +31,24 @@ const SearchForm = ({ start, searchWord, setStart, setSearchWord, setSearchResul
 
   useEffect(() => {
     (async () => {
-      const res = await axios.get('/api/v1/search/book_adv', {
-        params: { [requestQuery]: searchWord, start },
-        headers: {
-          'X-Naver-Client-Id': process.env.NAVER_CLIENT_ID!,
-          'X-Naver-Client-Secret': process.env.NAVER_CLIENT_SECRET!,
-        },
-      });
-      console.log(res.data);
-      setSearchResult(res.data.items);
+      try {
+        const { data: apiData } = await axios.get('/api/v1/search/book_adv', {
+          params: { [requestQuery]: searchWord, start },
+          headers: {
+            'X-Naver-Client-Id': process.env.NAVER_CLIENT_ID!,
+            'X-Naver-Client-Secret': process.env.NAVER_CLIENT_SECRET!,
+          },
+        });
+        const isbns = Object.assign(apiData.items).map((d: SearchResultType) => d.isbn);
+        const { data } = await axios.get('/books', { params: { isbns, userId: loggedUser?.idx } });
+        setSearchResult(
+          Object.assign(apiData.items).map((d: SearchResultType, index: number) => {
+            return { ...d, ...data[index] };
+          }),
+        );
+      } catch (err) {
+        // console.error(err);
+      }
     })();
   }, [start]);
 
@@ -47,20 +66,26 @@ const SearchForm = ({ start, searchWord, setStart, setSearchWord, setSearchResul
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await axios.get('/api/v1/search/book_adv', {
+      const { data: apiData } = await axios.get('/api/v1/search/book_adv', {
         params: { [requestQuery]: word, start: 1 },
         headers: {
           'X-Naver-Client-Id': process.env.NAVER_CLIENT_ID!,
           'X-Naver-Client-Secret': process.env.NAVER_CLIENT_SECRET!,
         },
       });
+      const isbns = Object.assign(apiData).items.map((d: SearchResultType) => d.isbn);
+      const { data } = await axios.get('/books', { params: { isbns, userId: loggedUser?.idx } });
       setWord('');
       setStart(1);
-      setSearchResult(res.data.items);
-      setTotalCnt(res.data.total);
+      setSearchResult(
+        Object.assign(apiData.items).map((d: SearchResultType, index: number) => {
+          return { ...d, ...data[index] };
+        }),
+      );
+      setTotalCnt(apiData.total);
       setSearchWord(word);
     } catch (err) {
-      console.error(err);
+      // console.error(err);
     }
   };
 

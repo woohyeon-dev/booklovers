@@ -6,6 +6,7 @@ export interface Image {
 }
 
 export interface User {
+  idx: number;
   email: string;
   nickname: string;
   gender?: string;

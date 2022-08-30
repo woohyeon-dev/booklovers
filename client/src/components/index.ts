@@ -3,6 +3,7 @@ import Search from './Search/Search';
 import SearchForm from './Search/SearchForm';
 import SearchInfo from './Search/SearchInfo';
 import SearchResult from './Search/SearchResult';
+import BookInfo from './Search/BookInfo';
 import Pagination from './Pagination';
 import Footer from './Layout/Footer';
 import Header from './Layout/Header';
@@ -24,6 +25,7 @@ export {
   SearchForm,
   SearchInfo,
   SearchResult,
+  BookInfo,
   Pagination,
   Footer,
   Header,

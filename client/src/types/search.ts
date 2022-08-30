@@ -1,4 +1,6 @@
 export interface SearchResultType {
+  likesCount?: number;
+  isLikes?: boolean;
   title?: string;
   link?: string;
   image?: string;

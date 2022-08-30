@@ -8,7 +8,6 @@ const Profile = () => {
   const [editable, setEditable] = useState<boolean>(false);
   const [update, setUpdate] = useState<boolean>(false);
   const loggedUser = getUser(update);
-  console.log(loggedUser);
   const navigate = useNavigate();
 
   useEffect(() => {

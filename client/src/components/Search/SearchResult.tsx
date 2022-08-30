@@ -1,25 +1,21 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import { SearchResultType } from '../../types/search';
+import { BookInfo } from '@components';
+import { User } from '../../types/profile';
 
 interface SearchResultProps {
+  loggedUser: User | undefined;
   searchResults: Array<SearchResultType>;
+  setSearchResult: Dispatch<SetStateAction<Array<SearchResultType>>>;
 }
 
-const SearchResult = ({ searchResults }: SearchResultProps) => {
+const SearchResult = ({ loggedUser, searchResults, setSearchResult }: SearchResultProps) => {
   return (
     <SearchResultBox>
       {searchResults.length > 0 &&
-        searchResults.map((result: SearchResultType, index: number) => (
-          <Wrapper key={index}>
-            <div className="coverBox">
-              <CoverImg src={result.image} />
-            </div>
-            <div className="info">
-              <Title>{result.title}</Title>
-              <Description>{result.description}</Description>
-            </div>
-          </Wrapper>
+        searchResults.map((result: SearchResultType) => (
+          <BookInfo loggedUser={loggedUser} result={result} setSearchResult={setSearchResult} />
         ))}
       {searchResults.length <= 0 && <div>요청하신 검색어에 대한 검색결과가 없습니다.</div>}
     </SearchResultBox>
@@ -29,46 +25,8 @@ const SearchResult = ({ searchResults }: SearchResultProps) => {
 const SearchResultBox = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
   margin-bottom: 20px;
-`;
-
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2.5fr;
-  padding: 20px;
-  grid-gap: 20px;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #90cdf4;
-    transition: color 0.3s;
-  }
-`;
-
-const CoverImg = styled.img`
-  width: 100%;
-  height: 200px;
-`;
-
-const Title = styled.div`
-  width: 338px;
-  height: 32px;
-  line-height: 32px;
-  font-weight: bold;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-`;
-
-const Description = styled.div`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 24px;
-  height: 168px;
-  display: -webkit-box;
-  -webkit-line-clamp: 7;
-  -webkit-box-orient: vertical;
+  grid-gap: 10px;
 `;
 
 export default SearchResult;

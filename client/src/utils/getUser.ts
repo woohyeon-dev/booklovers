@@ -5,6 +5,7 @@ import { refreshToken } from './refreshToken';
 
 export const getUser = (update: boolean = false): User | undefined => {
   const [loggedUser, setLoggedUser] = useState<User | undefined>({
+    idx: 0,
     email: '',
     nickname: '',
     gender: '',
@@ -33,7 +34,7 @@ export const getUser = (update: boolean = false): User | undefined => {
             }
           }
         } else {
-          console.error(err);
+          // console.error(err);
         }
         setLoggedUser(undefined);
       }

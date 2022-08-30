@@ -8,6 +8,7 @@ import db from './models';
 // routes
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import authRouter from './routes/auth';
+import booksRouter from './routes/books';
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use(
 );
 
 app.use('/auth', authRouter);
+app.use('/books', booksRouter);
 
 app.get('*', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../../client/build/index.html'));
@@ -58,7 +60,7 @@ app.listen(app.get('port'), async () => {
 
   // sequelize db 연결
   try {
-    await db.sequelize.sync({ force: true });
+    await db.sequelize.sync({ force: false });
     console.log('database connect');
   } catch (error) {
     console.error(error);

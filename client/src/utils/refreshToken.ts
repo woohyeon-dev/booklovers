@@ -11,6 +11,6 @@ export const refreshToken = async () => {
       axios.defaults.headers.common['Authorization'] = '';
       return 'guest';
     }
-    console.error(err);
+    // console.error(err);
   }
 };

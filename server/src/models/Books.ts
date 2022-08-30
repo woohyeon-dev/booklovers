@@ -2,14 +2,14 @@ import { DataTypes, Model } from 'sequelize';
 
 interface BooksAttributes {
   idx?: number;
-  isbn: number;
-  likeCount?: number;
+  isbn: string;
+  likesCount?: number;
 }
 
 export default class Books extends Model<BooksAttributes> {
   public readonly idx!: number;
-  public isbn!: number;
-  public likeCount?: number;
+  public isbn!: string;
+  public likesCount?: number;
 
   static initialize(sequelize: any) {
     return this.init(
@@ -21,10 +21,10 @@ export default class Books extends Model<BooksAttributes> {
           autoIncrement: true,
         },
         isbn: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING(30),
           allowNull: false,
         },
-        likeCount: {
+        likesCount: {
           type: DataTypes.INTEGER,
           allowNull: true,
           defaultValue: 0,
