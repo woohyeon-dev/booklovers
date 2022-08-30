@@ -2,7 +2,7 @@
 
 /.env
 
-/config/config.ts
+/src/config
 
 /src/uploads
 
