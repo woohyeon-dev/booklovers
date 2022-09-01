@@ -14,15 +14,21 @@ interface BookInfoProps {
 const BookInfo = ({ loggedUser, result, setSearchResult }: BookInfoProps) => {
   const handleLikes = async () => {
     try {
-      const { isbn, likesCount, isLikes } = result;
+      const { isbn, image, title, likesCount, isLikes } = result;
       let changedLikesCnt = 0;
       if (isLikes) {
-        await axios.post('/books/likes/cancel', { isbn, likesCount, userId: loggedUser?.idx });
+        await axios.post('/books/likes/cancel', {
+          isbn,
+          image,
+          title,
+          likesCount,
+          userId: loggedUser?.idx,
+        });
         if (likesCount) {
           changedLikesCnt = likesCount - 1;
         }
       } else {
-        await axios.post('/books/likes', { isbn, likesCount, userId: loggedUser?.idx });
+        await axios.post('/books/likes', { isbn, image, title, likesCount, userId: loggedUser?.idx });
         if (likesCount === 0 || likesCount) {
           changedLikesCnt = likesCount + 1;
         }

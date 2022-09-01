@@ -6,10 +6,15 @@ interface BookLikesAttributes {
   userId: number;
 }
 
+interface JoinBooksAttributes {
+  image?: string;
+  title?: string;
+}
 export default class BookLikes extends Model<BookLikesAttributes> {
   public readonly idx!: number;
   public bookId!: ForeignKey<number>;
   public userId!: ForeignKey<number>;
+  public book?: JoinBooksAttributes;
 
   static initialize(sequelize: any) {
     return this.init(

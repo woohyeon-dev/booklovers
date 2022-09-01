@@ -18,6 +18,7 @@ import FormContainer from './FormContainer';
 import ProfileMenu from './Layout/ProfileMenu';
 import ProfileInfo from './Profile/ProfileInfo';
 import EditProfile from './Profile/EditProfile';
+import ProfileBook from './Profile/ProfileBook';
 
 export {
   BookClub,
@@ -33,6 +34,7 @@ export {
   Profile,
   ProfileInfo,
   EditProfile,
+  ProfileBook,
   Input,
   Button,
   AntDesignDatePicker,

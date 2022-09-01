@@ -8,10 +8,13 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
   try {
     const isbns = req.query.isbns as string[];
-    const userId = req.query.userId ? Number(req.query.userId) : 0;
+    const userId: number = req.query.userId ? Number(req.query.userId) : 0;
     const result = [];
     for (let i = 0; i < isbns.length; i++) {
-      const book = await Books.findOne({ where: { isbn: isbns[i] } });
+      const book = await Books.findOne({
+        attributes: ['idx', 'likesCount'],
+        where: { isbn: isbns[i] },
+      });
       let isLikes = false;
       const bookId = book?.idx ? book.idx : 0;
       if (userId !== NaN) {
@@ -29,13 +32,35 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/user', async (req, res, next) => {
+  try {
+    console.log('this is called');
+    const userId = req.query.userId ? Number(req.query.userId) : 0;
+    const books = await BookLikes.findAll({
+      where: { userId },
+      include: [{ model: Books, attributes: ['image', 'title'] }],
+    });
+    const result = [];
+    for (const b of books) {
+      result.push({
+        image: b.book?.image,
+        title: b.book?.title,
+      });
+    }
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // 좋아요 취소
 router.post('/likes/cancel', async (req, res, next) => {
   try {
     // 해당 도서 isbn, 기존 좋아요 개수, user idx
-    const { isbn, likesCount, userId } = req.body;
+    const { isbn, image, title, likesCount, userId } = req.body;
     if (userId) {
       let book = await Books.findOne({
+        attributes: ['idx'],
         where: { isbn },
       });
       if (book) {
@@ -49,16 +74,19 @@ router.post('/likes/cancel', async (req, res, next) => {
         await Books.create({
           // idx 자동생성
           isbn,
+          image,
+          title,
           likesCount: 0,
         });
       }
       book = await Books.findOne({
+        attributes: ['idx'],
         where: { isbn },
       });
       await BookLikes.destroy({ where: { userId, bookId: book?.idx! } });
     }
     return res.json({ msg: '좋아요 취소 완료' });
-  } catch (err) {
+  } catch (err: any) {
     next(err);
   }
 });
@@ -67,9 +95,10 @@ router.post('/likes/cancel', async (req, res, next) => {
 router.post('/likes', async (req, res, next) => {
   try {
     // 해당 도서 isbn, 기존 좋아요 개수, user idx
-    const { isbn, likesCount, userId } = req.body;
+    const { isbn, image, title, likesCount, userId } = req.body;
     if (userId) {
       let book = await Books.findOne({
+        attributes: ['idx'],
         where: { isbn },
       });
       if (book) {
@@ -78,10 +107,13 @@ router.post('/likes', async (req, res, next) => {
         await Books.create({
           // idx 자동생성
           isbn,
+          image,
+          title,
           likesCount: 1,
         });
       }
       book = await Books.findOne({
+        attributes: ['idx'],
         where: { isbn },
       });
       await BookLikes.create({

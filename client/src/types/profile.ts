@@ -5,6 +5,11 @@ export interface Image {
   preview_URL: string;
 }
 
+export interface Book {
+  image: string;
+  title: string;
+}
+
 export interface User {
   idx: number;
   email: string;
