@@ -4,11 +4,12 @@ import { ProfileInfo, EditProfile, ProfileBook } from '@components';
 import { getUser } from '../../utils/getUser';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Book } from 'types/profile';
 
 const Profile = () => {
   const [editable, setEditable] = useState<boolean>(false);
   const [update, setUpdate] = useState<boolean>(false);
-  const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState<Array<Book>>([]);
   const loggedUser = getUser(update);
   const navigate = useNavigate();
 
@@ -39,10 +40,10 @@ const Profile = () => {
             {editable && <EditProfile loggedUser={loggedUser} setEditable={setEditable} setUpdate={setUpdate} />}
           </Box>
           <Box>
-            <h1>읽고 싶은 책</h1>
+            <h1>좋아요 누른 책</h1>
             <BookList>
               {books.reverse().map((book) => {
-                return <ProfileBook book={book} />;
+                return <ProfileBook loggedUser={loggedUser} book={book} setBooks={setBooks} />;
               })}
             </BookList>
           </Box>
@@ -80,6 +81,7 @@ const BookList = styled.div`
   overflow-y: scroll;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 214px;
   grid-gap: 20px;
   scrollbar-width: thin;
 
@@ -88,7 +90,7 @@ const BookList = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background-color: #f7f8f9;
+    background-color: #e4e4e4;
     border-radius: 100px;
   }
 

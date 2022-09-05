@@ -8,6 +8,8 @@ export interface Image {
 export interface Book {
   image: string;
   title: string;
+  isbn: string;
+  likesCount: number;
 }
 
 export interface User {

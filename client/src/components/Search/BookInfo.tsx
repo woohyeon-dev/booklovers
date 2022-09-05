@@ -12,7 +12,7 @@ interface BookInfoProps {
 }
 
 const BookInfo = ({ loggedUser, result, setSearchResult }: BookInfoProps) => {
-  const handleLikes = async () => {
+  const handleBookLikes = async () => {
     try {
       const { isbn, image, title, likesCount, isLikes } = result;
       let changedLikesCnt = 0;
@@ -48,8 +48,8 @@ const BookInfo = ({ loggedUser, result, setSearchResult }: BookInfoProps) => {
   };
   return (
     <BookInfoBox>
-      {loggedUser && result.isLikes && <FaHeart onClick={handleLikes} className="heart" />}
-      {loggedUser && !result.isLikes && <FaRegHeart onClick={handleLikes} className="heart" />}
+      {loggedUser && result.isLikes && <FaHeart onClick={handleBookLikes} className="heart" />}
+      {loggedUser && !result.isLikes && <FaRegHeart onClick={handleBookLikes} className="heart" />}
       <div className="coverBox">
         <CoverImg src={result.image} />
       </div>

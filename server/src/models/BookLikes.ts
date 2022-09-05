@@ -9,6 +9,8 @@ interface BookLikesAttributes {
 interface JoinBooksAttributes {
   image?: string;
   title?: string;
+  isbn?: string;
+  likesCount?: string;
 }
 export default class BookLikes extends Model<BookLikesAttributes> {
   public readonly idx!: number;

@@ -34,17 +34,20 @@ router.get('/', async (req, res, next) => {
 
 router.get('/user', async (req, res, next) => {
   try {
-    console.log('this is called');
     const userId = req.query.userId ? Number(req.query.userId) : 0;
     const books = await BookLikes.findAll({
       where: { userId },
-      include: [{ model: Books, attributes: ['image', 'title'] }],
+      include: [
+        { model: Books, attributes: ['image', 'title', 'isbn', 'likesCount'] },
+      ],
     });
     const result = [];
     for (const b of books) {
       result.push({
         image: b.book?.image,
         title: b.book?.title,
+        isbn: b.book?.isbn,
+        likesCount: b.book?.likesCount,
       });
     }
     res.json(result);
