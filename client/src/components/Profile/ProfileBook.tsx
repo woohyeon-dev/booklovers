@@ -21,7 +21,7 @@ const Img = styled.img`
   width: 134px;
   height: 190px;
   margin-bottom: 8px;
-  outline: 2px solid ${(props) => props.theme.borderColor};
+  border: 2px solid ${(props) => props.theme.borderColor};
 `;
 
 const Title = styled.div`

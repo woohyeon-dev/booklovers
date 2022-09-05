@@ -41,7 +41,7 @@ const Profile = () => {
           <Box>
             <h1>읽고 싶은 책</h1>
             <BookList>
-              {books.map((book) => {
+              {books.reverse().map((book) => {
                 return <ProfileBook book={book} />;
               })}
             </BookList>
@@ -53,17 +53,15 @@ const Profile = () => {
 };
 
 const ProfileBox = styled.div`
+  height: fit-content;
   margin: 40px 0;
   display: grid;
   grid-template-columns: 1fr 3fr;
-  padding: 20px;
   grid-gap: 20px;
-  border: 1px solid ${(props) => props.theme.borderColor};
-  background-color: #f7f8f9;
 `;
 
 const Box = styled.div`
-  height: fit-content;
+  height: 593px;
   border: 1px solid ${(props) => props.theme.borderColor};
   padding: 20px;
   border-radius: 0.5rem;
@@ -76,10 +74,31 @@ const Box = styled.div`
 `;
 
 const BookList = styled.div`
-  margin-top: 20px;
+  padding-right: 20px;
+  margin-top: 12px;
+  height: 521px;
+  overflow-y: scroll;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(5, 1fr);
   grid-gap: 20px;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f7f8f9;
+    border-radius: 100px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    border: 6px solid rgba(0, 0, 0, 0.18);
+    border-left: 0;
+    border-right: 0;
+    background-color: #d7d7d7;
+  }
 `;
 
 export default Profile;
