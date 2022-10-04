@@ -1,4 +1,4 @@
-import './style.css';
+import './styles/style.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
@@ -60,5 +60,10 @@ const GlobalStyle = createGlobalStyle`
   img {
     display: block;
   }
-  
+  strong {
+    font-weight: bold;
+  }
+  em {
+    font-style: italic;
+  }
 `;
